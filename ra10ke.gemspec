@@ -1,15 +1,15 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'r10k-rake-tasks/version'
+require 'ra10ke/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "r10k-rake-tasks"
-  spec.version       = R10KRakeTasks::VERSION
+  spec.name          = "ra10ke"
+  spec.version       = Ra10ke::VERSION
   spec.authors       = ["Theo Chatzimichos"]
   spec.email         = ["tampakrap@gmail.com"]
   spec.description   = %q{R10K and Puppetfile rake tasks}
   spec.summary       = %q{Syntax check for the Puppetfile, check for outdated installed puppet modules}
-  spec.homepage      = "https://github.com/tampakrap/r10k-rake-tasks"
+  spec.homepage      = "https://github.com/tampakrap/ra10ke"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)

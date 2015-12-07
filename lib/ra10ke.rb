@@ -1,7 +1,7 @@
 require 'rake'
 require 'rake/tasklib'
 
-module R10KRakeTasks
+module Ra10ke
   class RakeTask < ::Rake::TaskLib
     def initialize(*args)
       namespace :r10k do
@@ -40,4 +40,4 @@ module R10KRakeTasks
   end
 end
 
-R10KRakeTasks::RakeTask.new
+Ra10ke::RakeTask.new
