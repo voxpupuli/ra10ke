@@ -8,7 +8,12 @@ Rake tasks related to [R10K](https://github.com/puppetlabs/r10k) and
 
 ## Usage
 
-Simply add the following line in your `Gemfile`:
+Add the following line to your `Gemfile`:
+```ruby
+gem 'ra10ke'
+```
+
+Add the following line in your `Rakefile`:
 
 ```ruby
 require 'ra10ke'
