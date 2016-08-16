@@ -1,5 +1,6 @@
 require 'rake'
 require 'rake/tasklib'
+require 'ra10ke/version'
 
 module Ra10ke
   class RakeTask < ::Rake::TaskLib
@@ -10,6 +11,7 @@ module Ra10ke
           require 'r10k/puppetfile'
           require 'puppet_forge'
 
+          PuppetForge.user_agent = "ra10ke/#{Ra10ke::VERSION}"
           puppetfile = R10K::Puppetfile.new('.').load
 
           puppetfile.each do |puppet_module|
