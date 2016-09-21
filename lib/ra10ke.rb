@@ -12,9 +12,10 @@ module Ra10ke
           require 'puppet_forge'
 
           PuppetForge.user_agent = "ra10ke/#{Ra10ke::VERSION}"
-          puppetfile = R10K::Puppetfile.new('.').load
+          puppetfile = R10K::Puppetfile.new('.')
+          puppetfile.load!
 
-          puppetfile.each do |puppet_module|
+          puppetfile.modules.each do |puppet_module|
             if puppet_module.class == R10K::Module::Forge
               module_name = puppet_module.title.gsub('/', '-')
               forge_version = PuppetForge::Module.find(module_name).current_release.version
