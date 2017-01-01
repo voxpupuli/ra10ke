@@ -18,4 +18,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rake"
   spec.add_dependency "puppet_forge"
   spec.add_dependency "r10k"
+  spec.add_dependency "git"
 end

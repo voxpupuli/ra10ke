@@ -31,9 +31,20 @@ command.
 This rake task goes through the modules that are declared in the Puppetfile,
 and prints outdated modules.
 
+Supports:
+  - Puppet Forge
+  - Git (SHA-ref and Tagging)
+
+Ignoring specific modules:
+
+Under specific conditions you may not wish to report on specific modules being out of date,
+to ignore a module create `.r10kignore` file in the same directory as your Puppetfile.
+
 #### Limitations
 
-  * It works only with modules from the [Forge](https://forge.puppetlabs.com).
-  Git and SVN modules will be ignored.
+  * It works only with modules from the [Forge](https://forge.puppetlabs.com), and Git.
+  SVN modules will be ignored.
+  * Git support is explicitly SHA Ref and Tag supported. If tag is used it must follow
+  `v0.0.0` convention, other wise it will be ignored.
   * The version has to be specified explicitly. If it is omitted, or it is
   `:latest`, the module will be ignored.
