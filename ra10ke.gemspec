@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["tampakrap@gmail.com"]
   spec.description   = %q{R10K and Puppetfile rake tasks}
   spec.summary       = %q{Syntax check for the Puppetfile, check for outdated installed puppet modules}
-  spec.homepage      = "https://github.com/tampakrap/ra10ke"
+  spec.homepage      = "https://github.com/voxpupuli/ra10ke"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
