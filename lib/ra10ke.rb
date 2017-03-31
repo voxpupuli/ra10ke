@@ -1,6 +1,7 @@
 require 'rake'
 require 'rake/tasklib'
 require 'ra10ke/version'
+require 'ra10ke/solve'
 require 'git'
 
 module Ra10ke
