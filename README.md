@@ -40,6 +40,18 @@ Ignoring specific modules:
 Under specific conditions you may not wish to report on specific modules being out of date,
 to ignore a module create `.r10kignore` file in the same directory as your Puppetfile.
 
+### r10k:solve_dependencies
+
+Reads the Puppetfile in the current directory and uses the ruby 'solve' library to find
+missing and outdated dependencies based on their metadata.
+
+The solver does not allow major version bumps according to SemVer by default. To allow
+major upgrades, call the rake task with any parameter.
+
+The rake task will download git modules into the modules/ directory to access their metadata.json.
+It will also cache forge metadata in ̃$XDG_CACHE_DIR/ra10ke.metadata_cache in order to make subsequent
+runs faster.
+
 #### Limitations
 
   * It works only with modules from the [Forge](https://forge.puppetlabs.com), and Git.
