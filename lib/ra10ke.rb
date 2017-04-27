@@ -53,12 +53,17 @@ module Ra10ke
               when 'sha'
                 latest_ref = remote_refs['head'][:sha]
               when 'tag'
-                # we have to be opinionated here, due to multiple conventions only one can reign suppreme
-                # as such tag v#.#.# is what will pick.
+                # we have to be opinionated here, due to multiple conventions only the two main will be accepted
+                # v#.#.# or #.#.# is what we will pick.
+                tags = remote_refs['tags']
                 if ref.match(/^[vV]\d/)
-                  tags = remote_refs['tags']
                   version_tags = tags.select { |f| /^[vV]\d/.match(f) }
                   latest_ref = version_tags.keys.sort.last
+                elsif ref.match(/^\d[\.\d]*/)
+                  version_tags = tags.select { |f| /^\d[\.\d]*/.match(f) }
+                  latest_ref = version_tags.keys.sort.last
+                else
+                  latest_ref = "undef (tags don't match v#.#.# or #.#.#)"
                 end
               else
                 raise "Unable to determine ref_type for #{puppet_module.title}"
