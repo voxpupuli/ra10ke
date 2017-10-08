@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+0.3.0
+-----
+
+2017-10-08
+
+* [#6](https://github.com/voxpupuli/ra10ke/pull/6) Add a dependency solver based on the Ruby Solve library (thanks to [Jarkko Oranen](https://github.com/oranenj))
+* [#8](https://github.com/voxpupuli/ra10ke/pull/8) Add numeric tag convention support (thanks to [Hervé MARTIN](https://github.com/HerveMARTIN))
+
 0.2.0
 -----
 
