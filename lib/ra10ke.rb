@@ -36,11 +36,11 @@ module Ra10ke
 
             if puppet_module.class == R10K::Module::Git
               remote = puppet_module.instance_variable_get(:@remote)
-              ref    = puppet_module.instance_variable_get(:@desired_ref)
 
-              # some guards to prevent unnessicary execution
+              # use helper; avoid `desired_ref`
+              # we do not want to deal with `:control_branch`
+              ref = puppet_module.version
               next unless ref
-              next if ref == 'master'
 
               remote_refs = Git.ls_remote(remote)
 
