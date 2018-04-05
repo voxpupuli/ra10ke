@@ -61,7 +61,7 @@ module Ra10ke
                     nil
                   end
                 end.select { |tag| !tag.nil? }.sort.last.to_s.downcase
-                latest_ref = tags.detect { |tag| tag.downcase == latest_tag || tag.downcase == latest_tag[1..-1] }
+                latest_ref = tags.detect { |tag| [tag.downcase, "v#{tag.downcase}"].include?(latest_tag) }
                 latest_ref = 'undef (tags do not match semantic versioning)' if latest_ref.nil?
               elsif ref.match(/^[a-z0-9]{40}$/)
                 # for sha just assume head should be tracked
