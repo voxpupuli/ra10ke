@@ -57,7 +57,7 @@ module Ra10ke
                 # v#.#.# or #.#.# is what we will pick.
                 if ref.match(/^[vV]?\d[\.\d]*/)
                   tags = remote_refs['tags']
-                  version_tags = tags.select { |f| /^[vV]?\d[\.\d]*/.match(f) }
+                  version_tags = tags.select { |f| /^[vV]?\d[\.\d]*$/.match(f) }
                   latest_ref = version_tags.keys.sort.last
                 else
                   latest_ref = "undef (tags don't match v#.#.# or #.#.#)"
