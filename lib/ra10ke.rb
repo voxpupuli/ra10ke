@@ -3,6 +3,7 @@ require 'rake/tasklib'
 require 'ra10ke/version'
 require 'ra10ke/solve'
 require 'git'
+require 'semverse'
 
 module Ra10ke
   class RakeTask < ::Rake::TaskLib
@@ -35,35 +36,38 @@ module Ra10ke
             end
 
             if puppet_module.class == R10K::Module::Git
-              remote = puppet_module.instance_variable_get(:@remote)
-
               # use helper; avoid `desired_ref`
               # we do not want to deal with `:control_branch`
               ref = puppet_module.version
               next unless ref
 
+              remote = puppet_module.instance_variable_get(:@remote)
               remote_refs = Git.ls_remote(remote)
 
               # skip if ref is a branch
               next if remote_refs['branches'].key?(ref)
 
-              ref_type = 'sha'    if ref.match(/^[a-z0-9]{40}$/)
-              ref_type = 'tag'    if remote_refs['tags'].key?(ref)
-              case ref_type
-              when 'sha'
+              if remote_refs['tags'].key?(ref)
+                # there are too many possible versioning conventions
+                # we have to be be opinionated here
+                # so semantic versioning (vX.Y.Z) it is for us
+                # as well as support for skipping the leading v letter
+                tags = remote_refs['tags'].keys
+                latest_tag = tags.map do |tag|
+                  begin
+                    Semverse::Version.new tag
+                  rescue Semverse::InvalidVersionFormat
+                    # ignore tags that do not comply to semver
+                    nil
+                  end
+                end.select { |tag| !tag.nil? }.sort.last.to_s.downcase
+                latest_ref = tags.detect { |tag| tag.downcase == latest_tag || tag.downcase == latest_tag[1..-1] }
+                latest_ref = 'undef (tags do not match semantic versioning)' if latest_ref.nil?
+              elsif ref.match(/^[a-z0-9]{40}$/)
+                # for sha just assume head should be tracked
                 latest_ref = remote_refs['head'][:sha]
-              when 'tag'
-                # we have to be opinionated here, due to multiple conventions only the two main will be accepted
-                # v#.#.# or #.#.# is what we will pick.
-                if ref.match(/^[vV]?\d[\.\d]*/)
-                  tags = remote_refs['tags']
-                  version_tags = tags.select { |f| /^[vV]?\d[\.\d]*$/.match(f) }
-                  latest_ref = version_tags.keys.sort.last
-                else
-                  latest_ref = "undef (tags don't match v#.#.# or #.#.#)"
-                end
               else
-                raise "Unable to determine ref_type for #{puppet_module.title}"
+                raise "Unable to determine ref type for #{puppet_module.title}"
               end
 
               puts "#{puppet_module.title} is OUTDATED: #{ref} vs #{latest_ref}" if ref != latest_ref
