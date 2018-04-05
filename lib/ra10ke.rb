@@ -3,6 +3,7 @@ require 'rake/tasklib'
 require 'ra10ke/version'
 require 'ra10ke/solve'
 require 'git'
+require 'semverse'
 
 module Ra10ke
   class RakeTask < ::Rake::TaskLib
@@ -53,15 +54,21 @@ module Ra10ke
               when 'sha'
                 latest_ref = remote_refs['head'][:sha]
               when 'tag'
-                # we have to be opinionated here, due to multiple conventions only the two main will be accepted
-                # v#.#.# or #.#.# is what we will pick.
-                if ref.match(/^[vV]?\d[\.\d]*/)
-                  tags = remote_refs['tags']
-                  version_tags = tags.select { |f| /^[vV]?\d[\.\d]*$/.match(f) }
-                  latest_ref = version_tags.keys.sort.last
-                else
-                  latest_ref = "undef (tags don't match v#.#.# or #.#.#)"
-                end
+                # there are too many possible versioning conventions
+                # we have to be be opinionated here
+                # so semantic versioning (vX.Y.Z) it is for us
+                # as well as support for skipping the leading v letter
+                tags = remote_refs['tags'].keys
+                latest_tag = tags.map do |tag|
+                  begin
+                    Semverse::Version.new tag
+                  rescue Semverse::InvalidVersionFormat
+                    # ignore tags that do not comply to semver
+                    nil
+                  end
+                end.select { |tag| !tag.nil? }.sort.last.to_s.downcase
+                latest_ref = tags.detect { |tag| tag.downcase == latest_tag || tag.downcase == latest_tag[1..-1] }
+                latest_ref = 'undef (tags do not match semantic versioning)' if latest_ref.nil?
               else
                 raise "Unable to determine ref_type for #{puppet_module.title}"
               end
