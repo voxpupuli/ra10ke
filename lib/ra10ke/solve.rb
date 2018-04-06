@@ -26,7 +26,7 @@ module Ra10ke::Solve
 
           # Same as in the dependencies task, but oh well.
           PuppetForge.user_agent = "ra10ke/#{Ra10ke::VERSION}"
-          puppetfile = R10K::Puppetfile.new('.')
+          puppetfile = R10K::Puppetfile.new(Dir.pwd)
           puppetfile.load!
 
           # ignore file allows for "don't tell me about this"

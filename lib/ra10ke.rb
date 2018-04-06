@@ -15,7 +15,7 @@ module Ra10ke
           require 'puppet_forge'
 
           PuppetForge.user_agent = "ra10ke/#{Ra10ke::VERSION}"
-          puppetfile = R10K::Puppetfile.new('.')
+          puppetfile = R10K::Puppetfile.new(Dir.pwd)
           puppetfile.load!
 
           # ignore file allows for "don't tell me about this"
@@ -80,7 +80,7 @@ module Ra10ke
           require 'r10k/action/puppetfile/check'
 
           puppetfile = R10K::Action::Puppetfile::Check.new({
-            :root => ".",
+            :root => Dir.pwd,
             :moduledir => nil,
             :puppetfile => nil
           }, '')
