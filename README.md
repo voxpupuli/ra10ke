@@ -52,6 +52,10 @@ The rake task will download git modules into the modules/ directory to access th
 It will also cache forge metadata in ̃$XDG_CACHE_DIR/ra10ke.metadata_cache in order to make subsequent
 runs faster.
 
+### r10k:install[path]
+
+Reads the Puppetfile in the current directory and installs them under the `path` provided as an argument.
+
 #### Limitations
 
   * It works only with modules from the [Forge](https://forge.puppetlabs.com), and Git.

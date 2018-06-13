@@ -86,6 +86,46 @@ module Ra10ke
           }, '')
           puppetfile.call
         end
+
+        desc "Install modules specified in Puppetfile"
+        task :install, [:path] do |_, args|
+          require 'r10k/puppetfile'
+          require 'pathname'
+
+          if !args.has_key?(:path)
+            raise "task requires 'path' argument"
+          end
+          modpath = Pathname.new args[:path]
+
+          if !modpath.absolute?
+            modpath = Pathname.new(Dir.pwd) + modpath
+          end
+
+          puppetfile_dir = Pathname.new Dir.pwd
+          modules_dir = File.join(puppetfile_dir, modpath.relative_path_from(puppetfile_dir))
+          puppetfile = R10K::Puppetfile.new(puppetfile_dir, modules_dir)
+          puppetfile.load!
+
+          puts "Processing Puppetfile for fixtures"
+          puppetfile.modules.each do |mod|
+            if mod.status == :insync
+              puts "Skipping #{mod.name} (#{mod.version}) already in sync"
+            else
+              if mod.status == :absent
+                msg = "installed #{mod.name}"
+              else
+                msg = "updated #{mod.name} from #{mod.version} to"
+              end
+              mod.sync
+              if mod.status != :insync
+                puts "Failed to sync #{mod.name}".red
+              else
+                puts "Successfully #{msg} #{mod.version}".green
+              end
+            end
+          end
+        end
+
       end
     end
   end
