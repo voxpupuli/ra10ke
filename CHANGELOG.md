@@ -1,6 +1,23 @@
 CHANGELOG
 =========
 
+0.4.0
+-----
+
+2018-06-17
+
+* [#13](https://github.com/voxpupuli/ra10ke/pull/13) Avoid using `desired_ref` directly for Git
+* [#14](https://github.com/voxpupuli/ra10ke/pull/14) Set required Ruby version as `>= 2.1.0`
+* [#15](https://github.com/voxpupuli/ra10ke/pull/15) ignore invalid ref
+* [#16](https://github.com/voxpupuli/ra10ke/pull/16) Use Semantic Versioning for Git tags
+* [#17](https://github.com/voxpupuli/ra10ke/pull/17) Be careful around trimming Git tags
+* [#19](https://github.com/voxpupuli/ra10ke/pull/19) Ensure Puppetfile gets parsed with absolute path
+
+Many thanks to the following contributors for submitting the PRs:
+* [Valter Jansons](https://github.com/sigv)
+* [Martin Alfke](https://github.com/tuxmea)
+* [Matthias Baur](https://github.com/baurmatt)
+
 0.3.0
 -----
 
