@@ -28,6 +28,7 @@ module Ra10ke::Solve
           PuppetForge.user_agent = "ra10ke/#{Ra10ke::VERSION}"
           puppetfile = R10K::Puppetfile.new(Dir.pwd)
           puppetfile.load!
+          PuppetForge.host = puppetfile.forge if puppetfile.forge =~ /^http/
 
           # ignore file allows for "don't tell me about this"
           ignore_modules = []
