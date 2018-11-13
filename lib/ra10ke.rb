@@ -85,7 +85,10 @@ module Ra10ke
             :moduledir => nil,
             :puppetfile => nil
           }, '')
-          puppetfile.call
+
+          unless puppetfile.call
+            abort("Puppetfile syntax check failed")
+          end
         end
 
         desc "Install modules specified in Puppetfile"
