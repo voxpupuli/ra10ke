@@ -1,0 +1,25 @@
+---
+dist: xenial
+sudo: false
+language: ruby
+rvm:
+  - '2.3'
+  - '2.4'
+  - '2.5'
+deploy:
+  provider: rubygems
+  api_key:
+    secure: "Vnvr7VC8HI3ccJhvDXv7cFqMtMjaOFzUKpM7tte0o2jDybt7XiOlOqGt6qrZ/dDtla7zYa1tgdNzDCbzWxYaZnRLW2v10wiwFrbDHCZTYPq82w4FtdIv04qymG5CnxsW7MyrZ/jUTzbwpEJyUTMuHE8u00aTewZ8Xdm43MuAVOerQneZQ22uzK3S0p6hW4iXkO7GnBln/BPxMaAzheB6NXpprBJEGL86Hb5M4N7qrxcv4SKepTnvap/DM3M95m9QyxJ0TJ2+CivltPclDByH/WgsFwehd6wYcS+9HBLM6Acg8vM167Dii88v8yBzYwF2lIL8I4LoVX1yaBlwey/VpnYSfkrmknDQ9jkBRYVDPp+6ur4h2atfww96TBObLW9HmbE0xLneCiXeZjuG+ty34HixJgeEFh2w9wtBvEdxjudvkx/IkUtAwyoTLdVSRsyDRI6Vh8z53G3abiLQCgSUqgQlkH6dISSxIODhxhklLlOE7MXn5p1uaotFdpa9o2OA79FEdAQNc42MCPglid/Xtp0CN0FlPyt2t9I1iwF7UpgsUIcydVwm9PaHNMQo5PgnfWyvIY/JPrlVt57bEcu8nBqWr4QTmNAuBTSeXGoGYV+gJfNscT5yw5BjVS07D85z9X3zniHUuMDH3vu1Pz4SBzz55R31qWfE0Ikcd4Jxo+A="
+  gem: ra10ke
+  on:
+    tags: true
+    repo: voxpupuli/ra10ke
+    rvm: '2.5'
+
+notifications:
+  email: false
+  irc:
+    on_success: always
+    on_failure: always
+    channels:
+      - "chat.freenode.org#voxpupuli-notifications"
