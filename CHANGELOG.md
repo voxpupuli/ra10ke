@@ -1,6 +1,18 @@
 CHANGELOG
 =========
 
+0.5.0
+-----
+
+2018-12-26
+
+Closed Pull Requests:
+
+* [#22](https://github.com/voxpupuli/ra10ke/pull/22) Add rudimentary r10k:install task
+* [#26](https://github.com/voxpupuli/ra10ke/pull/26) make use of the forge command in puppetfile
+* [#29](https://github.com/voxpupuli/ra10ke/pull/29) Abort (exit 1) if Puppetfile syntax check fails
+* [#30](https://github.com/voxpupuli/ra10ke/pull/30) enable travis deployment
+
 0.4.0
 -----
 
