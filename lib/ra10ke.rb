@@ -7,6 +7,8 @@ require 'semverse'
 
 module Ra10ke
   class RakeTask < ::Rake::TaskLib
+    include Ra10ke::Solve
+
     attr_accessor :basedir, :moduledir, :puppetfile_path, :puppetfile_name, :force
 
     def initialize(*args)
@@ -19,6 +21,8 @@ module Ra10ke
       yield(self) if block_given?
 
       namespace :r10k do
+        define_task_solve_dependencies(*args)
+
         desc "Print outdated forge modules"
         task :dependencies do
           require 'r10k/puppetfile'
