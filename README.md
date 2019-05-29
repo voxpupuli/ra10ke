@@ -13,11 +13,33 @@ Add the following line to your `Gemfile`:
 gem 'ra10ke'
 ```
 
-Add the following line in your `Rakefile`:
+Add the following lines in your `Rakefile`:
 
 ```ruby
 require 'ra10ke'
+Ra10ke::RakeTask.new
 ```
+
+## Configuration
+
+You can configure the tasks in a block:
+
+```ruby
+Ra10ke::RakeTask.new do |t|
+  t.basedir = File.join(Dir.pwd, 'some_dir')
+  t.moduledir = File.join(Dir.pwd, 'some_dir/strange_module_dir')
+end
+```
+
+Available settings are:
+
+| Setting         | Documentation                                                                                 |
+|-----------------|-----------------------------------------------------------------------------------------------|
+| basedir         | Base directory with the Puppetfile and modules directory (Default: Same directory as Rakefile)|
+| moduledir       | Directory to install the modules in (Default: 'modules' in basedir)                           |
+| puppetfile_path | Directroy where the Puppetfile is (Default: basedir)                                          |
+| puppetfile_name | The Puppetfile name (Default: basedir/Puppetfile)                                             |
+| force           | Overwrite locally changed files on install (Default: false)                                   |
 
 ## Rake tasks
 

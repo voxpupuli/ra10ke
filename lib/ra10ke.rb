@@ -7,15 +7,29 @@ require 'semverse'
 
 module Ra10ke
   class RakeTask < ::Rake::TaskLib
+    include Ra10ke::Solve
+
+    attr_accessor :basedir, :moduledir, :puppetfile_path, :puppetfile_name, :force
+
     def initialize(*args)
+      @basedir         = Dir.pwd
+      @moduledir       = nil
+      @puppetfile_path = nil
+      @puppetfile_name = nil
+      @force           = nil
+
+      yield(self) if block_given?
+
       namespace :r10k do
+        define_task_solve_dependencies(*args)
+
         desc "Print outdated forge modules"
         task :dependencies do
           require 'r10k/puppetfile'
           require 'puppet_forge'
 
           PuppetForge.user_agent = "ra10ke/#{Ra10ke::VERSION}"
-          puppetfile = R10K::Puppetfile.new(Dir.pwd)
+          puppetfile = get_puppetfile
           puppetfile.load!
           PuppetForge.host = puppetfile.forge if puppetfile.forge =~ /^http/
 
@@ -81,9 +95,9 @@ module Ra10ke
           require 'r10k/action/puppetfile/check'
 
           puppetfile = R10K::Action::Puppetfile::Check.new({
-            :root => Dir.pwd,
-            :moduledir => nil,
-            :puppetfile => nil
+            :root => @basedir,
+            :moduledir => @moduledir,
+            :puppetfile => @puppetfile_path
           }, '')
 
           unless puppetfile.call
@@ -92,22 +106,10 @@ module Ra10ke
         end
 
         desc "Install modules specified in Puppetfile"
-        task :install, [:path] do |_, args|
+        task :install do
           require 'r10k/puppetfile'
-          require 'pathname'
 
-          if !args.has_key?(:path)
-            raise "task requires 'path' argument"
-          end
-          modpath = Pathname.new args[:path]
-
-          if !modpath.absolute?
-            modpath = Pathname.new(Dir.pwd) + modpath
-          end
-
-          puppetfile_dir = Pathname.new Dir.pwd
-          modules_dir = File.join(puppetfile_dir, modpath.relative_path_from(puppetfile_dir))
-          puppetfile = R10K::Puppetfile.new(puppetfile_dir, modules_dir)
+          puppetfile = get_puppetfile
           puppetfile.load!
 
           puts "Processing Puppetfile for fixtures"
@@ -132,7 +134,9 @@ module Ra10ke
 
       end
     end
+
+    def get_puppetfile
+      R10K::Puppetfile.new(@basedir, @moduledir, @puppetfile_path, @puppetfile_name, @force)
+    end
   end
 end
-
-Ra10ke::RakeTask.new
