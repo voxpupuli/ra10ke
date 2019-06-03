@@ -2,6 +2,7 @@ require 'rake'
 require 'rake/tasklib'
 require 'ra10ke/version'
 require 'ra10ke/solve'
+require 'ra10ke/syntax'
 require 'ra10ke/dependencies'
 require 'git'
 require 'semverse'
@@ -9,6 +10,7 @@ require 'semverse'
 module Ra10ke
   class RakeTask < ::Rake::TaskLib
     include Ra10ke::Solve
+    include Ra10ke::Syntax
     include Ra10ke::Dependencies
 
     attr_accessor :basedir, :moduledir, :puppetfile_path, :puppetfile_name, :force
@@ -24,22 +26,8 @@ module Ra10ke
 
       namespace :r10k do
         define_task_solve_dependencies(*args)
+        define_task_syntax(*args)
         define_task_dependencies(*args)
-
-        desc "Syntax check Puppetfile"
-        task :syntax do
-          require 'r10k/action/puppetfile/check'
-
-          puppetfile = R10K::Action::Puppetfile::Check.new({
-            :root => @basedir,
-            :moduledir => @moduledir,
-            :puppetfile => @puppetfile_path
-          }, '')
-
-          unless puppetfile.call
-            abort("Puppetfile syntax check failed")
-          end
-        end
 
         desc "Install modules specified in Puppetfile"
         task :install do
