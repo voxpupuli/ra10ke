@@ -15,7 +15,7 @@ module Ra10ke
     include Ra10ke::Dependencies
     include Ra10ke::Install
 
-    attr_accessor :basedir, :moduledir, :puppetfile_path, :puppetfile_name, :force
+    attr_accessor :basedir, :moduledir, :puppetfile_path, :puppetfile_name, :force, :purge
 
     def initialize(*args)
       @basedir         = Dir.pwd
@@ -23,6 +23,7 @@ module Ra10ke
       @puppetfile_path = nil
       @puppetfile_name = nil
       @force           = nil
+      @purge           = false
 
       yield(self) if block_given?
 

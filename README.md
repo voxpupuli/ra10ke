@@ -40,6 +40,7 @@ Available settings are:
 | puppetfile_path | Directroy where the Puppetfile is (Default: basedir)                                          |
 | puppetfile_name | The Puppetfile name (Default: basedir/Puppetfile)                                             |
 | force           | Overwrite locally changed files on install (Default: false)                                   |
+| purge           | Purge unmanaged modules from the modulesdir (Default: false)                                  |
 
 ## Rake tasks
 

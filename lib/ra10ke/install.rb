@@ -25,6 +25,8 @@ module Ra10ke::Install
           end
         end
       end
+
+      puppetfile.purge! if @purge
     end
   end
 end
