@@ -47,13 +47,13 @@ module Ra10ke::Dependencies
             tags = remote_refs['tags'].keys
             latest_tag = tags.map do |tag|
               begin
-                Semverse::Version.new tag
+                Semverse::Version.new tag[/\Av?(.*)\Z/, 1]
               rescue Semverse::InvalidVersionFormat
                 # ignore tags that do not comply to semver
                 nil
               end
             end.select { |tag| !tag.nil? }.sort.last.to_s.downcase
-            latest_ref = tags.detect { |tag| [tag.downcase, "v#{tag.downcase}"].include?(latest_tag) }
+            latest_ref = tags.detect { |tag| tag[/\Av?(.*)\Z/, 1] == latest_tag }
             latest_ref = 'undef (tags do not match semantic versioning)' if latest_ref.nil?
           elsif ref.match(/^[a-z0-9]{40}$/)
             # for sha just assume head should be tracked
