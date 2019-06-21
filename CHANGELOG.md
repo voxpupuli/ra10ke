@@ -1,6 +1,16 @@
 CHANGELOG
 =========
 
+0.6.0
+-----
+
+2019-06-21
+
+Closed Pull Requests:
+
+* [#33](https://github.com/voxpupuli/ra10ke/pull/33) Refactor tasks, Version tag handling fix, purge option
+* [#32](https://github.com/voxpupuli/ra10ke/pull/32) Make it possible to configure the tasks in the rakefile
+
 0.5.0
 -----
 
