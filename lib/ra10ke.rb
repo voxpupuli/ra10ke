@@ -5,15 +5,17 @@ require 'ra10ke/solve'
 require 'ra10ke/syntax'
 require 'ra10ke/dependencies'
 require 'ra10ke/install'
+require 'ra10ke/validate'
 require 'git'
 require 'semverse'
-
+require 'r10k/puppetfile'
 module Ra10ke
   class RakeTask < ::Rake::TaskLib
     include Ra10ke::Solve
     include Ra10ke::Syntax
     include Ra10ke::Dependencies
     include Ra10ke::Install
+    include Ra10ke::Validate
 
     attr_accessor :basedir, :moduledir, :puppetfile_path, :puppetfile_name, :force, :purge
 
@@ -32,6 +34,7 @@ module Ra10ke
         define_task_syntax(*args)
         define_task_dependencies(*args)
         define_task_install(*args)
+        define_task_validate(*args)
       end
     end
 

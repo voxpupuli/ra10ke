@@ -79,6 +79,41 @@ runs faster.
 
 Reads the Puppetfile in the current directory and installs them under the `path` provided as an argument.
 
+### r10k:validate[path]
+The validate rake task will determine if the url is a valid url by connecting 
+to the repository and verififying it actually exists and can be accessed.
+Additional if a branch, tag, or ref is specified in the Puppetfile the validate
+task will also verify that that branch/tag/ref exists in the remote repository.
+
+If you have ever deployed r10k to production only to find out a tag or branch is
+missing this validate task will catch that issue.  
+
+A exit status of 0 is returned if there are no faults, while a 1 is returned if
+any module has a bad status. 
+
+Status emojis can be customized by setting the following environment variables.
+
+Example
+
+ * `GOOD_EMOJI='👍'`
+ * `BAD_EMOJI='😨'`
+
+
+```
+NAME     | URL                                           | REF                            | STATUS
+---------|-----------------------------------------------|--------------------------------|-------
+splunk   | https://github.com/cudgel/splunk.git          | prod                           | 👍
+r10k     | https://github.com/acidprime/r10k             | v3.1.1                         | 👍
+gms      | https://github.com/npwalker/abrader-gms       | gitlab_disable_ssl_verify_s... | 👍
+rbac     | https://github.com/puppetlabs/pltraining-rbac | 2f60e1789a721ce83f8df061e13... | 👍
+acl      | https://github.com/dobbymoodge/puppet-acl.git | master                         | 👍
+deploy   | https://github.com/cudgel/deploy.git          | master                         | 👍
+dotfiles | https://github.com/cudgel/puppet-dotfiles.git | master                         | 👍
+gitlab   | https://github.com/vshn/puppet-gitlab         | 00397b86dfb3487d9df768cbd36... | 👍
+
+👍👍 Puppetfile looks good.👍👍
+```
+
 #### Limitations
 
   * It works only with modules from the [Forge](https://forge.puppetlabs.com), and Git.
