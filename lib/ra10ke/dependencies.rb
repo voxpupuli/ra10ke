@@ -69,4 +69,3 @@ module Ra10ke::Dependencies
 
   end
 end
-

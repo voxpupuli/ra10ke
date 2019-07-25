@@ -1,0 +1,12 @@
+mod 'puppet-hiera',
+  git: 'https://github.com/voxpupuli/puppet-hiera.git',
+  tag: '6.0.0'
+
+mod 'puppet-hiera',
+  git: 'https://github.com/voxpupuli/puppet-hiera.git',
+  tag: 'v6.0.0'
+
+mod 'puppet-hiera',
+  git: 'https://github.com/voxpupuli/puppet-hiera.git',
+  tag: 'abc'
+  
