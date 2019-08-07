@@ -1,6 +1,22 @@
 CHANGELOG
 =========
 
+0.6.0
+-----
+
+2019-07-30
+
+Closed Pull Requests:
+
+* [#35](https://github.com/voxpupuli/ra10ke/pull/35) Adds new validate task for verifying the integrity of all modules      specified in the Puppetfile
+* [#33](https://github.com/voxpupuli/ra10ke/pull/33) Refactor tasks, Version tag handling fix, purge option
+* [#32](https://github.com/voxpupuli/ra10ke/pull/32) Make it possible to configure the tasks in the rakefile
+
+Many thanks to the following contributors for submitting PRs:
+
+* [Corey Osman](https://github.com/logicminds)
+* [Andreas Zuber](https://github.com/ZeroPointEnergy)
+
 0.5.0
 -----
 
