@@ -79,6 +79,15 @@ runs faster.
 
 Reads the Puppetfile in the current directory and installs them under the `path` provided as an argument.
 
+#### Limitations
+
+  * It works only with modules from the [Forge](https://forge.puppetlabs.com), and Git.
+  SVN modules will be ignored.
+  * Git support is explicitly SHA Ref and Tag supported. If tag is used it must follow
+  `v0.0.0` convention, other wise it will be ignored.
+  * The version has to be specified explicitly. If it is omitted, or it is
+  `:latest`, the module will be ignored.
+  
 ### r10k:validate[path]
 The validate rake task will determine if the url is a valid url by connecting 
 to the repository and verififying it actually exists and can be accessed.
@@ -114,11 +123,3 @@ gitlab   | https://github.com/vshn/puppet-gitlab         | 00397b86dfb3487d9df76
 👍👍 Puppetfile looks good.👍👍
 ```
 
-#### Limitations
-
-  * It works only with modules from the [Forge](https://forge.puppetlabs.com), and Git.
-  SVN modules will be ignored.
-  * Git support is explicitly SHA Ref and Tag supported. If tag is used it must follow
-  `v0.0.0` convention, other wise it will be ignored.
-  * The version has to be specified explicitly. If it is omitted, or it is
-  `:latest`, the module will be ignored.
