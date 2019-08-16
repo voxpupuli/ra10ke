@@ -45,6 +45,9 @@ RSpec.describe 'Ra10ke::PuppetfileParser' do
               :namespace=>nil},
              {:args=>{:branch=>"prod", :git=>"https://github.com/cudgel/splunk.git"},
               :name=>"splunk",
+              :namespace=>nil},
+             {:args=>{:branch=>"master", :git=>"https://github.com/voxpupuli/puppet-module.git"},
+              :name=>"puppet",
               :namespace=>nil}]
     end
 
@@ -85,6 +88,9 @@ RSpec.describe 'Ra10ke::PuppetfileParser' do
            :namespace=>nil},
           {:args=>{:branch=>"prod", :git=>"https://github.com/cudgel/splunk.git"},
            :name=>"splunk",
+           :namespace=>nil},
+          {:args=>{:branch=>"master", :git=>"https://github.com/voxpupuli/puppet-module.git"},
+           :name=>"puppet",
            :namespace=>nil}]
         expect(git_modules(puppetfile)).to eq(expected)
     end
