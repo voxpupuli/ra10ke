@@ -5,8 +5,8 @@ require 'ra10ke/version'
 Gem::Specification.new do |spec|
   spec.name          = "ra10ke"
   spec.version       = Ra10ke::VERSION
-  spec.authors       = ["Theo Chatzimichos"]
-  spec.email         = ["tampakrap@gmail.com"]
+  spec.authors       = ["Theo Chatzimichos", "Vox Pupuli"]
+  spec.email         = ["voxpupuli@groups.io"]
   spec.description   = %q{R10K and Puppetfile rake tasks}
   spec.summary       = %q{Syntax check for the Puppetfile, check for outdated installed puppet modules}
   spec.homepage      = "https://github.com/voxpupuli/ra10ke"
