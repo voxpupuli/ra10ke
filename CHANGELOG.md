@@ -1,6 +1,23 @@
 CHANGELOG
 =========
 
+0.6.1
+-----
+
+2019-08-17
+
+Closed Pull Requests:
+
+* [#40](https://github.com/voxpupuli/ra10ke/pull/40) - Fix a fault in the mod handling behaviour
+
+Closed Issues:
+
+* [#25](https://github.com/voxpupuli/ra10ke/issues/25) - Consider making r10k:install have a default path of '.'
+
+Many thanks to the following contributors for submitting PRs:
+
+* [Alexander Olofsson](https://github.com/ananace)
+
 0.6.0
 -----
 
