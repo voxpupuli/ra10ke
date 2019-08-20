@@ -71,10 +71,9 @@ RSpec.describe 'Ra10ke::Validate::Validation' do
 
   it '#all_refs' do
     refs = instance.all_refs('https://www.example.com')
-    expect(refs).to be_a Hash
+    expect(refs).to be_a Array
     expect(refs.first).to eq(
-        ["0ec707e431367bbe2752966be8ab915b6f0da754",
-             {:name=>"74110ac", :ref=>"refs/heads/74110ac", :subtype=>nil, :type=>:branch}]
+      {:sha=>"0ec707e431367bbe2752966be8ab915b6f0da754",:name=>"74110ac", :ref=>"refs/heads/74110ac", :subtype=>nil, :type=>:branch}
     )
 
   end
