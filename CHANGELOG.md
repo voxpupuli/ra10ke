@@ -1,6 +1,19 @@
 CHANGELOG
 =========
 
+0.6.2
+-----
+
+2019-08-26
+
+Closed Pull Requests:
+
+* [#42](https://github.com/voxpupuli/ra10ke/pull/42) - Fix lost refs in validation
+
+Again many thanks to the following contributors for submitting PRs:
+
+* [Alexander Olofsson](https://github.com/ananace)
+
 0.6.1
 -----
 
