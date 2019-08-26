@@ -46,11 +46,11 @@ module Ra10ke
       # @param ref [String] - the ref object, branch name, tag name, or commit sha, defaults to HEAD
       def valid_ref?(url, ref = 'HEAD')
         raise ArgumentError unless ref
-        found = all_refs(url).find do |sha, data | 
+        found = all_refs(url).find do |data|
           # we don't need to bother with these types
           next if data[:type] == :pull || data[:type] == :merge_request     
           # is the name equal to the tag or branch?  Is the commit sha equal?     
-          data[:name].eql?(ref) || sha.slice(0,8).eql?(ref.slice(0,8))
+          data[:name].eql?(ref) || data[:sha].slice(0,8).eql?(ref.slice(0,8))
         end
         !found.nil?
       end
@@ -66,7 +66,7 @@ module Ra10ke
       def all_refs(url)
         data = `git ls-remote --symref #{url}`
         raise "Error downloading #{url}" unless $CHILD_STATUS.success?
-        data.lines.reduce({}) do |refs, line|
+        data.lines.reduce([]) do |refs, line|
           sha, ref = line.split("\t")
           next refs if sha.eql?('ref: refs/heads/master')
           _, type, name, subtype = ref.chomp.split('/')
@@ -75,8 +75,7 @@ module Ra10ke
           type = type.to_sym
           subtype = subtype.to_sym if subtype
           type = :branch if type.eql?(:heads)
-          refs[sha] = {ref: ref.chomp, type: type, subtype: subtype, name: name }
-          refs
+          refs << { sha: sha, ref: ref.chomp, type: type, subtype: subtype, name: name }
         end
       end
 
