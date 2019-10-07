@@ -55,14 +55,14 @@ module Ra10ke
         !found.nil?
       end
 
-      # @return [Hash] - a hash of all the refs associated with the remote repository
+      # @return [Array] - an array of all the refs associated with the remote repository
       # @param url [String] - the git string either https or ssh url
       # @example
-      # {"0ec707e431367bbe2752966be8ab915b6f0da754"=>{:ref=>"refs/heads/74110ac", :type=>:branch, :subtype=>nil, :name=>"74110ac"},
-        # "07bb5d2d94db222dca5860eb29c184e8970f36f4"=>{:ref=>"refs/pull/74/head", :type=>:pull, :subtype=>:head, :name=>"74"},
-        # "156ca9a8ea69e056e86355b27d944e59d1b3a1e1"=>{:ref=>"refs/heads/master", :type=>:branch, :subtype=>nil, :name=>"master"},
-        # "fcc0532bbc5a5b65f3941738339e9cc7e3d767ce"=>{:ref=>"refs/pull/249/head", :type=>:pull, :subtype=>:head, :name=>"249"},
-        # "8d54891fa5df75890ee15d53080c2a81b4960f92"=>{:ref=>"refs/pull/267/head", :type=>:pull, :subtype=>:head, :name=>"267"} }
+      #   [{:sha=>"0ec707e431367bbe2752966be8ab915b6f0da754", :ref=>"refs/heads/74110ac", :type=>:branch, :subtype=>nil, :name=>"74110ac"},
+      #     :sha=>"07bb5d2d94db222dca5860eb29c184e8970f36f4", :ref=>"refs/pull/74/head", :type=>:pull, :subtype=>:head, :name=>"74"},
+      #     :sha=>"156ca9a8ea69e056e86355b27d944e59d1b3a1e1", :ref=>"refs/heads/master", :type=>:branch, :subtype=>nil, :name=>"master"},
+      #     :sha=>"fcc0532bbc5a5b65f3941738339e9cc7e3d767ce", :ref=>"refs/pull/249/head", :type=>:pull, :subtype=>:head, :name=>"249"},
+      #     :sha=>"8d54891fa5df75890ee15d53080c2a81b4960f92", :ref=>"refs/pull/267/head", :type=>:pull, :subtype=>:head, :name=>"267"}]
       def all_refs(url)
         data = `git ls-remote --symref #{url}`
         raise "Error downloading #{url}" unless $CHILD_STATUS.success?
