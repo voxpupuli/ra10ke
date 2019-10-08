@@ -123,3 +123,25 @@ gitlab   | https://github.com/vshn/puppet-gitlab         | 00397b86dfb3487d9df76
 👍👍 Puppetfile looks good.👍👍
 ```
 
+### r10k:duplicates
+
+This rake task parses the Puppetfile and looks for modules with duplicate
+declarations.
+
+All found duplicates are reported along with their source and their version
+(if taken from the Forge) or their ref/tag/branch. (if taken from git)
+
+Example
+
+```
+puppet:
+- abstractit/puppet from the forge at version 2.4.1
+- theforeman/puppet from the forge at version 12.0.1
+- puppet from git on the branch master at https://github.com/voxpupuli/puppet-module.git
+
+gitlab:
+- puppet/gitlab from the forge at version 4.0.1
+- gitlab from git on the ref 00397b86dfb3487d9df768cbd3698d362132b5bf at https://github.com/vshn/puppet-gitlab
+
+Error: Duplicates exist in the Puppetfile
+```
