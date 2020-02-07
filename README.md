@@ -111,7 +111,7 @@ Example
 ```
 NAME     | URL                                           | REF                            | STATUS
 ---------|-----------------------------------------------|--------------------------------|-------
-splunk   | https://github.com/cudgel/splunk.git          | prod                           | 👍
+splunk   | https://github.com/cudgel/splunk.git          | dev                            | 👍
 r10k     | https://github.com/acidprime/r10k             | v3.1.1                         | 👍
 gms      | https://github.com/npwalker/abrader-gms       | gitlab_disable_ssl_verify_s... | 👍
 rbac     | https://github.com/puppetlabs/pltraining-rbac | 2f60e1789a721ce83f8df061e13... | 👍

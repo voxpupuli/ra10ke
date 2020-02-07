@@ -43,7 +43,7 @@ mod 'dotfiles',
 
 mod 'splunk',
     git: 'https://github.com/cudgel/splunk.git',
-    branch: 'prod'
+    branch: 'dev'
 
 mod 'puppet',
     git: 'https://github.com/voxpupuli/puppet-module.git',
