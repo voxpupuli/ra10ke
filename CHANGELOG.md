@@ -1,6 +1,17 @@
 CHANGELOG
 =========
 
+1.0.0
+-----
+
+2020-02-08
+
+Closed Pull Requests:
+
+* [#44](https://github.com/voxpupuli/ra10ke/pull/44) - Fix the faulty docs for Ra10ke::Validate#all_refs after [#42](https://github.com/voxpupuli/ra10ke/pull/42)
+* [#45](https://github.com/voxpupuli/ra10ke/pull/45) - Add a duplicates check
+* [#48](https://github.com/voxpupuli/ra10ke/pull/48) - Allow semverse 3.x
+
 0.6.2
 -----
 
