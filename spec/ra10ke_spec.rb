@@ -65,8 +65,7 @@ RSpec.describe 'Ra10ke::RakeTask' do
     # The output should be different.
     # Testing this by itself works
     it '#run_validate_task' do
-      t =  Ra10ke::RakeTask.new
-      task2 = t.define_task_validate(args)
+      task2 = instance.define_task_validate(args)
       expect(task2.invoke).to be nil
     end
   end

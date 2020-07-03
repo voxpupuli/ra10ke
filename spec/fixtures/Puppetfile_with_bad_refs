@@ -8,3 +8,6 @@ mod 'r10k',
   :git => 'https://github.com/acidprime/r10k',
   :tag => 'bad'
   
+mod 'debug',
+  :git => 'https://github.com/nwops/typo'    
+  
