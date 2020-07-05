@@ -24,4 +24,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'semverse', '>= 2.0'
   spec.add_dependency 'table_print', '~> 1.5.6'
   spec.add_development_dependency 'rspec', '~> 3.6'
+  spec.add_development_dependency 'pry'
+
 end
