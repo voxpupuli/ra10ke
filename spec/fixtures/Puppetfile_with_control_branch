@@ -1,0 +1,12 @@
+mod 'puppet-hiera_master',
+  git: 'https://github.com/voxpupuli/puppet-hiera_master.git',
+  branch: master
+
+mod 'puppet-hiera_control',
+  git: 'https://github.com/voxpupuli/puppet-hiera_control.git',
+  branch: :control_branch
+
+mod 'puppet-hiera_fakecontrol',
+  git: 'https://github.com/voxpupuli/puppet-hiera_fakecontrol.git',
+  branch: control_branch
+  
