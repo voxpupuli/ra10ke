@@ -8,10 +8,19 @@ module Ra10ke
 
     REMOTE_REFS_CMD = 'git ls-remote --symref'
     CLONE_CMD = 'git clone --no-tags'
+    CURRENT_BRANCH_CMD = 'git symbolic-ref --short HEAD'
     SHOW_CMD = 'git show'
 
     def initialize(url)
       @url = url
+    end
+
+    # @return [String] - The current active branch of the Git repo
+    def current_branch
+      @current_branch ||= begin
+        data, success = run_command(CURRENT_BRANCH_CMD)
+        success ? data.strip : nil
+      end
     end
 
     # @return [Array] - the raw data from the git ls-remote command as lines array
