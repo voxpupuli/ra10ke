@@ -48,7 +48,7 @@ module Ra10ke
             repo = Ra10ke::GitRepo.new(mod[:args][:git])
             ref = mod[:args][:ref] || mod[:args][:tag] || mod[:args][:branch]
             # If using control_branch, try to guesstimate what the target branch should be
-            ref = ENV['CONTROL_BRANCH'] || repo.current_branch || ENV['FALLBACK_CONTROL_BRANCH'] || 'main' \
+            ref = ENV['CONTROL_BRANCH'] || repo.current_branch || ENV['CONTROL_BRANCH_FALLBACK'] || 'main' \
               if ref == ':control_branch'
             valid_ref = repo.valid_ref?(ref) || repo.valid_commit?(mod[:args][:ref])
             {
