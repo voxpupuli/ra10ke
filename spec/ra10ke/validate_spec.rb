@@ -18,14 +18,52 @@ RSpec.describe 'Ra10ke::Validate::Validation' do
     let(:instance) do
       Ra10ke::Validate::Validation.new(puppetfile)
     end
-  
+
     let(:puppetfile) do
       File.join(fixtures_dir, 'Puppetfile_with_bad_refs')
     end
 
-    it 'details mods that are bad' do     
+    it 'details mods that are bad' do
       expect(instance.all_modules.find {|m| ! m[:valid_url?]}).to be_a Hash
       expect(instance.all_modules.find_all {|m| ! m[:valid_ref?]}.count).to eq(2)
+    end
+  end
+
+  describe 'control_branch' do
+    before(:each) do
+      ENV.delete 'CONTROL_BRANCH'
+      ENV.delete 'CONTROL_BRANCH_FALLBACK'
+      allow_any_instance_of(Ra10ke::GitRepo).to receive(:valid_ref?).and_return(true)
+      allow_any_instance_of(Ra10ke::GitRepo).to receive(:valid_url?).and_return(true)
+    end
+
+    let(:instance) do
+      Ra10ke::Validate::Validation.new(puppetfile)
+    end
+
+    let(:puppetfile) do
+      File.join(fixtures_dir, 'Puppetfile_with_control_branch')
+    end
+
+    it 'correctly replaces control branch' do
+      ENV['CONTROL_BRANCH'] = 'env-control_branch'
+      expect(instance.all_modules.find_all { |mod| mod[:ref] == 'env-control_branch' }.count).to eq(1)
+    end
+
+    it 'correctly detects current branch' do
+      allow_any_instance_of(Ra10ke::GitRepo).to receive(:current_branch).and_return('current_branch-control_branch')
+      expect(instance.all_modules.find_all { |mod| mod[:ref] == 'current_branch-control_branch' }.count).to eq(1)
+    end
+
+    it 'correctly falls back if no current branch' do
+      ENV['CONTROL_BRANCH_FALLBACK'] = 'env-control_branch_fallback'
+      allow_any_instance_of(Ra10ke::GitRepo).to receive(:current_branch).and_return(nil)
+      expect(instance.all_modules.find_all { |mod| mod[:ref] == 'env-control_branch_fallback' }.count).to eq(1)
+    end
+
+    it 'correctly falls back to main if no current branch and no fallback' do
+      allow_any_instance_of(Ra10ke::GitRepo).to receive(:current_branch).and_return(nil)
+      expect(instance.all_modules.find_all { |mod| mod[:ref] == 'main' }.count).to eq(1)
     end
   end
 
