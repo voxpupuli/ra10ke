@@ -12,6 +12,13 @@ module Ra10ke
         end
       end
 
+      # @return [Array] - returns a array of hashes that contain modules from the Forge
+      def forge_modules(file = puppetfile)
+        modules(file).reject do |mod|
+          mod[:args].key?(:git)
+        end
+      end
+
       # @param puppetfile [String] - the absolute path to the puppetfile
       # @return [Array] - returns an array of module hashes that represent the puppetfile
       # @example

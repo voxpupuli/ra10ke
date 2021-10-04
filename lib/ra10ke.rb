@@ -4,6 +4,7 @@ require 'ra10ke/version'
 require 'ra10ke/solve'
 require 'ra10ke/syntax'
 require 'ra10ke/dependencies'
+require 'ra10ke/deprecation'
 require 'ra10ke/duplicates'
 require 'ra10ke/install'
 require 'ra10ke/validate'
@@ -15,6 +16,7 @@ module Ra10ke
     include Ra10ke::Solve
     include Ra10ke::Syntax
     include Ra10ke::Dependencies
+    include Ra10ke::Deprecation
     include Ra10ke::Duplicates
     include Ra10ke::Install
     include Ra10ke::Validate
@@ -35,6 +37,7 @@ module Ra10ke
         define_task_solve_dependencies(*args)
         define_task_syntax(*args)
         define_task_dependencies(*args)
+        define_task_deprecation(*args)
         define_task_duplicates(*args)
         define_task_install(*args)
         define_task_validate(*args)

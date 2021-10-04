@@ -9,7 +9,9 @@ RSpec.describe 'Ra10ke::PuppetfileParser' do
     end
 
     let(:puppetfile_modules) do
-        [{:args=>{:version=>"2.2.0"}, :name=>"inifile", :namespace=>"puppetlabs"},
+        [{:args=>{:version=>'0.26.2'}, :name=>'choria', :namespace=>nil},
+             {:args=>{:version=>"2.2.0"}, :name=>"inifile", :namespace=>"puppetlabs"},
+             {:args=>{:version=>"1.0.1"}, :name=>"ruby", :namespace=>"puppetlabs"},
              {:args=>{:version=>"4.24.0"}, :name=>"stdlib", :namespace=>"puppetlabs"},
              {:args=>{:version=>"4.0.0"}, :name=>"concat", :namespace=>"puppetlabs"},
              {:args=>{:version=>"6.4.1"}, :name=>"ntp", :namespace=>"puppetlabs"},
