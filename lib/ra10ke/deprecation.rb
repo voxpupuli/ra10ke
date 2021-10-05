@@ -41,14 +41,17 @@ module Ra10ke::Deprecation
     def deprecated_modules
       @deprecated_modules ||= begin
         deprecated = forge_modules(puppetfile).map do |mod|
-          module_name = "#{mod[:namespace] || mod[:name]}-#{mod[:name]}"
-          forge_data = PuppetForge::Module.find(module_name)
+          # For Ruby 2.4 support
+          begin # rubocop:disable Style/RedundantBegin
+            module_name = "#{mod[:namespace] || mod[:name]}-#{mod[:name]}"
+            forge_data = PuppetForge::Module.find(module_name)
 
-          next forge_data if forge_data.deprecated_at
+            next forge_data if forge_data.deprecated_at
 
-          nil
-        rescue Faraday::ResourceNotFound
-          nil
+            nil
+          rescue Faraday::ResourceNotFound
+            nil
+          end
         end
         deprecated.compact.map do |mod|
           { name: mod.slug, deprecated_at: Time.parse(mod.deprecated_at) }
