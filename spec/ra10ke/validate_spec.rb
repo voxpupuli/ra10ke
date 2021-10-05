@@ -5,13 +5,17 @@ require 'ra10ke/validate'
 RSpec::Mocks.configuration.allow_message_expectations_on_nil = true
 
 RSpec.describe 'Ra10ke::Validate::Validation' do
-
   let(:instance) do
     Ra10ke::Validate::Validation.new(puppetfile)
   end
 
   let(:puppetfile) do
     File.join(fixtures_dir, 'Puppetfile')
+  end
+
+  before(:each) do
+    allow_any_instance_of(Ra10ke::GitRepo).to receive(:valid_ref?).and_return(true)
+    allow_any_instance_of(Ra10ke::GitRepo).to receive(:valid_url?).and_return(true)
   end
 
   describe 'bad url' do
@@ -23,9 +27,26 @@ RSpec.describe 'Ra10ke::Validate::Validation' do
       File.join(fixtures_dir, 'Puppetfile_with_bad_refs')
     end
 
+    before(:each) do
+      working = double('Ra1ke::GitRepo', url: 'https://github.com/vshn/puppet-gitlab')
+      expect(working).to receive(:valid_ref?).with('00397b86dfb3487d9df768cbd3698d362132b5bf').and_return(false)
+      expect(working).to receive(:valid_commit?).with('00397b86dfb3487d9df768cbd3698d362132b5bf').and_return(true)
+      expect(working).to receive(:valid_url?).and_return(true)
+      bad_tag = double('Ra1ke::GitRepo', url: 'https://github.com/acidprime/r10k')
+      expect(bad_tag).to receive(:valid_ref?).with('bad').and_return(false)
+      expect(bad_tag).to receive(:valid_commit?).with(nil).and_return(false)
+      expect(bad_tag).to receive(:valid_url?).and_return(true)
+      bad_url = double('Ra1ke::GitRepo', url: 'https://github.com/nwops/typo')
+      expect(bad_url).to receive(:valid_ref?).with(nil).and_return(false)
+      expect(bad_url).to receive(:valid_commit?).with(nil).and_return(false)
+      expect(bad_url).to receive(:valid_url?).and_return(false)
+
+      expect(Ra10ke::GitRepo).to receive(:new).and_return(working, bad_tag, bad_url)
+    end
+
     it 'details mods that are bad' do
-      expect(instance.all_modules.find {|m| ! m[:valid_url?]}).to be_a Hash
-      expect(instance.all_modules.find_all {|m| ! m[:valid_ref?]}.count).to eq(2)
+      expect(instance.all_modules.find { |m| !m[:valid_url?] }).to be_a Hash
+      expect(instance.all_modules.find_all { |m| !m[:valid_ref?] }.count).to eq(2)
     end
   end
 
@@ -33,8 +54,6 @@ RSpec.describe 'Ra10ke::Validate::Validation' do
     before(:each) do
       ENV.delete 'CONTROL_BRANCH'
       ENV.delete 'CONTROL_BRANCH_FALLBACK'
-      allow_any_instance_of(Ra10ke::GitRepo).to receive(:valid_ref?).and_return(true)
-      allow_any_instance_of(Ra10ke::GitRepo).to receive(:valid_url?).and_return(true)
     end
 
     let(:instance) do

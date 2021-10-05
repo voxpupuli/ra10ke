@@ -1,7 +1,12 @@
 ra10ke
 ======
 
-[![Gem Version](https://badge.fury.io/rb/ra10ke.svg)](https://badge.fury.io/rb/ra10ke)
+[![License](https://img.shields.io/github/license/voxpupuli/ra10ke.svg)](https://github.com/voxpupuli/ra10ke/blob/master/LICENSE.txt)
+[![Test](https://github.com/voxpupuli/ra10ke/actions/workflows/test.yml/badge.svg)](https://github.com/voxpupuli/ra10ke/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/voxpupuli/ra10ke/branch/master/graph/badge.svg?token=Mypkl78hvK)](https://codecov.io/gh/voxpupuli/ra10ke)
+[![Release](https://github.com/voxpupuli/ra10ke/actions/workflows/release.yml/badge.svg)](https://github.com/voxpupuli/ra10ke/actions/workflows/release.yml)
+[![RubyGem Version](https://img.shields.io/gem/v/ra10ke.svg)](https://rubygems.org/gems/ra10ke)
+[![RubyGem Downloads](https://img.shields.io/gem/dt/ra10ke.svg)](https://rubygems.org/gems/ra10ke)
 
 Rake tasks related to [R10K](https://github.com/puppetlabs/r10k) and
 [Puppetfile](https://github.com/puppetlabs/r10k/blob/master/doc/puppetfile.mkd).

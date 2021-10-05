@@ -1,23 +1,30 @@
 # frozen_string_literal: true
-require 'simplecov'
 
-module SimpleCov::Configuration
-  def clean_filters
-    @filters = []
+begin
+  require 'simplecov'
+  require 'simplecov-console'
+  require 'codecov'
+rescue LoadError
+else
+  SimpleCov.start do
+    track_files 'lib/**/*.rb'
+
+    add_filter '/spec'
+
+    enable_coverage :branch
+
+    # do not track vendored files
+    add_filter '/vendor'
+    add_filter '/.vendor'
   end
+
+  SimpleCov.formatters = [
+    SimpleCov::Formatter::Console,
+    SimpleCov::Formatter::Codecov,
+  ]
 end
 
-SimpleCov.configure do
-  clean_filters
-  load_profile 'test_frameworks'
-end
-
-SimpleCov.start do
-  add_filter '/.rvm/'
-  add_filter 'vendor'
-  add_filter 'bundler'
-end if ENV['COVERAGE']
-
+require 'rspec/core'
 
 def fixtures_dir
     File.join(__dir__, 'fixtures')
