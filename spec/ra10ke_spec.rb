@@ -6,7 +6,7 @@ require 'spec_helper'
 RSpec.describe 'Ra10ke::RakeTask' do
   let(:instance) do
     Ra10ke::RakeTask.new do |t|
-        t.puppetfile_path = puppetfile
+      t.puppetfile_path = puppetfile
     end
   end
 
@@ -50,6 +50,9 @@ RSpec.describe 'Ra10ke::RakeTask' do
 
   describe 'run tasks with good refs' do
     it '#run_validate_task' do
+      allow_any_instance_of(Ra10ke::GitRepo).to receive(:valid_ref?).and_return(true)
+      allow_any_instance_of(Ra10ke::GitRepo).to receive(:valid_url?).and_return(true)
+
       task = instance.define_task_validate(args)
       expect(task.invoke).to be_a Array
     end
@@ -59,7 +62,7 @@ RSpec.describe 'Ra10ke::RakeTask' do
     let(:puppetfile) do
       File.join(fixtures_dir, 'Puppetfile_with_bad_refs')
     end
-    
+
     # I suspect rake is caching something here and the puppetfile is 
     # not being sent correctly as it is not using the file I specify. 
     # The output should be different.
