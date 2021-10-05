@@ -150,3 +150,22 @@ gitlab:
 
 Error: Duplicates exist in the Puppetfile
 ```
+
+### r10k:deprecation
+
+This rake task checks all the Forge modules listed in the Puppetfile, looking
+for modules that are marked as deprecated on the Forge.
+
+Example
+
+```
+NAME                    | DEPRECATED_AT            
+------------------------|--------------------------
+kemra102-auditd         | 2021-07-22 12:11:46      
+puppet-staging          | 2018-12-18 11:11:29      
+puppetlabs-resource_api | 2021-03-31 12:53:24      
+puppetlabs-ruby         | 2021-04-22 10:29:42      
+puppetlabs-translate    | 2021-03-19 10:11:51      
+
+Error: Puppetfile contains deprecated modules.
+```

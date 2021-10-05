@@ -2,7 +2,9 @@
 
 forge 'http://forge.puppetlabs.com'
 
+mod 'choria/choria',          '0.26.2'
 mod 'puppetlabs/inifile',     '2.2.0'
+mod 'puppetlabs-ruby',        '1.0.1'
 mod 'puppetlabs/stdlib',      '4.24.0'
 mod 'puppetlabs/concat',      '4.0.0'
 mod 'puppetlabs/ntp',         '6.4.1'
