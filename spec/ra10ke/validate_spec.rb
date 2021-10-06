@@ -70,34 +70,34 @@ RSpec.describe 'Ra10ke::Validate::Validation' do
     end
 
     it 'correctly detects current branch' do
-      allow_any_instance_of(Ra10ke::GitRepo).to receive(:current_branch).and_return('current_branch-control_branch')
+      allow(Ra10ke::GitRepo).to receive(:current_branch).and_return('current_branch-control_branch')
       expect(instance.all_modules.find { |m| m[:name] == 'hiera_control' }[:ref]).to eq('current_branch-control_branch')
     end
 
     it 'correctly falls back if no current branch' do
       ENV['CONTROL_BRANCH_FALLBACK'] = 'env-control_branch_fallback'
-      allow_any_instance_of(Ra10ke::GitRepo).to receive(:current_branch).and_return(nil)
+      allow(Ra10ke::GitRepo).to receive(:current_branch).and_return(nil)
       expect(instance.all_modules.find { |m| m[:name] == 'hiera_control' }[:ref]).to eq('env-control_branch_fallback')
     end
 
     it 'correctly falls back to default_branch if no current branch' do
-      allow_any_instance_of(Ra10ke::GitRepo).to receive(:current_branch).and_return(nil)
+      allow(Ra10ke::GitRepo).to receive(:current_branch).and_return(nil)
       expect(instance.all_modules.find { |m| m[:name] == 'hiera_controlwithdefault' }[:ref]).to eq('master')
     end
 
     it 'correctly falls back to fallback if no current branch but default branch' do
       ENV['CONTROL_BRANCH_FALLBACK'] = 'env-control_branch_fallback'
-      allow_any_instance_of(Ra10ke::GitRepo).to receive(:current_branch).and_return(nil)
+      allow(Ra10ke::GitRepo).to receive(:current_branch).and_return(nil)
       expect(instance.all_modules.find { |m| m[:name] == 'hiera_controlwithdefault' }[:ref]).to eq('env-control_branch_fallback')
     end
 
     it 'correctly falls back to default_branch if no current branch with override' do
-      allow_any_instance_of(Ra10ke::GitRepo).to receive(:current_branch).and_return(nil)
+      allow(Ra10ke::GitRepo).to receive(:current_branch).and_return(nil)
       expect(instance.all_modules.find { |m| m[:name] == 'hiera_controlwithdefaultoverride' }[:ref]).to eq('master')
     end
 
     it 'correctly falls back to main if no current branch and no fallback' do
-      allow_any_instance_of(Ra10ke::GitRepo).to receive(:current_branch).and_return(nil)
+      allow(Ra10ke::GitRepo).to receive(:current_branch).and_return(nil)
       expect(instance.all_modules.find { |m| m[:name] == 'hiera_control' }[:ref]).to eq('main')
     end
   end
