@@ -23,10 +23,8 @@ module Ra10ke::Dependencies
 
   def get_latest_ref(remote_refs)
     tags = remote_refs['tags'].keys
-    latest_ref = @@version_formats.detect do |name, block|
-      latest_ref = block.call(tags)
-      break latest_ref unless latest_ref.nil?
-    end
+    latest_ref = nil
+    @@version_formats.detect { |_, block| latest_ref = block.call(tags) }
     latest_ref = 'undef (tags do not follow any known pattern)' if latest_ref.nil?
     latest_ref
   end
