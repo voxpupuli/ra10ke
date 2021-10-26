@@ -15,11 +15,13 @@ module Ra10ke
       @url = url
     end
 
+    # Get the current branch for a Git repo
+    # @param path [String] - The path to the repository to check
     # @return [String] - The current active branch of the Git repo
-    def current_branch
-      @current_branch ||= begin
+    def self.current_branch(path)
+      Dir.chdir(path) do
         data, success = run_command(CURRENT_BRANCH_CMD)
-        success ? data.strip : nil
+        return success ? data.strip : nil
       end
     end
 
@@ -101,10 +103,14 @@ module Ra10ke
     # @param cmd [String]
     # @param silent [Boolean] set to true if you wish to send output to /dev/null, false by default
     # @return [Array]
-    def run_command(cmd, silent: false)
+    def self.run_command(cmd, silent: false)
       out_args = silent ? '2>&1 > /dev/null' : '2>&1'
       out = `#{cmd} #{out_args}`
       [out, $CHILD_STATUS.success?]
+    end
+
+    def run_command(cmd, silent: false)
+      self.class.run_command(cmd, silent: silent)
     end
   end
 end

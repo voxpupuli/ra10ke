@@ -44,12 +44,19 @@ module Ra10ke
       # @return [Array[Hash]] array of module information and git status
       def all_modules
         @all_modules ||= begin
+          r10k_branch = Ra10ke::GitRepo.current_branch(File.dirname(puppetfile))
           git_modules(puppetfile).map do |mod|
             repo = Ra10ke::GitRepo.new(mod[:args][:git])
             ref = mod[:args][:ref] || mod[:args][:tag] || mod[:args][:branch]
             # If using control_branch, try to guesstimate what the target branch should be
-            ref = ENV['CONTROL_BRANCH'] || repo.current_branch || mod[:args][:default_branch_override] || ENV['CONTROL_BRANCH_FALLBACK'] || mod[:args][:default_branch] || 'main' \
-              if ref == ':control_branch'
+            if ref == ':control_branch'
+              ref = ENV['CONTROL_BRANCH'] \
+                    || r10k_branch \
+                    || mod[:args][:default_branch_override] \
+                    || ENV['CONTROL_BRANCH_FALLBACK'] \
+                    || mod[:args][:default_branch] \
+                    || 'main'
+            end
             valid_ref = repo.valid_ref?(ref) || repo.valid_commit?(mod[:args][:ref])
             {
               name: mod[:name],
