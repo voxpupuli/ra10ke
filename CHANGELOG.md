@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.0](https://github.com/voxpupuli/ra10ke/tree/v1.2.0) (2022-04-21)
+
+[Full Changelog](https://github.com/voxpupuli/ra10ke/compare/v1.1.0...v1.2.0)
+
+**Closed issues:**
+
+- Add support for commit ref [\#67](https://github.com/voxpupuli/ra10ke/issues/67)
+
+**Merged pull requests:**
+
+- Fix \#67 - Add support for commit ref [\#68](https://github.com/voxpupuli/ra10ke/pull/68) ([logicminds](https://github.com/logicminds))
+
 ## [v1.1.0](https://github.com/voxpupuli/ra10ke/tree/v1.1.0) (2021-10-26)
 
 [Full Changelog](https://github.com/voxpupuli/ra10ke/compare/v1.0.0...v1.1.0)
