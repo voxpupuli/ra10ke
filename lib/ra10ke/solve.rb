@@ -6,6 +6,7 @@ require 'set'
 require 'solve'
 require 'yaml/store'
 require 'semverse/version'
+require 'fileutils'
 
 # How many versions to fetch from the Forge, at most
 FETCH_LIMIT = 3
@@ -35,6 +36,9 @@ module Ra10ke::Solve
       end
       # Actual new logic begins here:
       cache = (ENV['XDG_CACHE_DIR'] || File.expand_path('~/.cache'))
+
+      FileUtils.mkdir_p(cache)
+      
       # Metadata cache, since the Forge is slow:
       @metadata_cache = YAML::Store.new File.join(cache, 'ra10ke.metadata_cache')
       # The graph of available module versions
