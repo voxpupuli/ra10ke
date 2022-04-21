@@ -18,6 +18,17 @@ RSpec.describe 'Ra10ke::Validate::Validation' do
     allow_any_instance_of(Ra10ke::GitRepo).to receive(:valid_url?).and_return(true)
   end
 
+  describe 'with commit' do
+    let(:puppetfile) do
+      File.join(fixtures_dir, 'Puppetfile_with_commit')
+    end
+
+    it '#data is a hash with values' do
+      keys = instance.all_modules.first.values
+      expect(keys).to eq(["ntp", "https://github.com/puppetlabs/puppetlabs-ntp", "81b34c6", true, true, "👍"])
+    end
+  end
+
   describe 'bad url' do
     let(:instance) do
       Ra10ke::Validate::Validation.new(puppetfile)
