@@ -1,0 +1,3 @@
+mod 'ntp',
+  git: 'https://github.com/puppetlabs/puppetlabs-ntp',
+  commit: '81b34c6'

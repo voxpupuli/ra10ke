@@ -47,7 +47,7 @@ module Ra10ke
           r10k_branch = Ra10ke::GitRepo.current_branch(File.dirname(puppetfile))
           git_modules(puppetfile).map do |mod|
             repo = Ra10ke::GitRepo.new(mod[:args][:git])
-            ref = mod[:args][:ref] || mod[:args][:tag] || mod[:args][:branch]
+            ref = mod[:args][:ref] || mod[:args][:tag] || mod[:args][:branch] || mod[:args][:commit]
             # If using control_branch, try to guesstimate what the target branch should be
             if ref == ':control_branch'
               ref = ENV['CONTROL_BRANCH'] \
