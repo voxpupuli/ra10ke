@@ -3,6 +3,7 @@ require 'rake/tasklib'
 require 'ra10ke/version'
 require 'ra10ke/solve'
 require 'ra10ke/syntax'
+require 'ra10ke/resolver'
 require 'ra10ke/dependencies'
 require 'ra10ke/deprecation'
 require 'ra10ke/duplicates'
@@ -20,6 +21,7 @@ module Ra10ke
     include Ra10ke::Duplicates
     include Ra10ke::Install
     include Ra10ke::Validate
+    include Ra10ke::Resolver
 
     attr_accessor :basedir, :moduledir, :puppetfile_path, :puppetfile_name, :force, :purge
 
@@ -42,6 +44,7 @@ module Ra10ke
         define_task_install(*args)
         define_task_validate(*args)
         define_task_print_git_conversion(*args)
+        define_task_resolver(*args)
       end
     end
 
