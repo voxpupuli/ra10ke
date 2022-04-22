@@ -58,59 +58,72 @@ module Ra10ke::Dependencies
     # @returns {Array} array of version info for each module
     # @note does not include ignored modules or modules up2date
     def processed_modules(supplied_puppetfile = puppetfile)
+      threads = []
+      threads = supplied_puppetfile.modules.map do |puppet_module|
+      Thread.new do 
+        begin
+          next if ignored_modules.include? puppet_module.title
+          if puppet_module.class == ::R10K::Module::Forge
+            module_name = puppet_module.title.gsub('/', '-')
+            forge_version = ::PuppetForge::Module.find(module_name).current_release.version
+            installed_version = puppet_module.expected_version
+            {
+              name: puppet_module.title,
+              installed: installed_version,
+              latest: forge_version,
+              type: 'forge',
+              message: installed_version != forge_version ? :outdated : :current
+            }
+          
+          elsif puppet_module.class == R10K::Module::Git
+            # use helper; avoid `desired_ref`
+            # we do not want to deal with `:control_branch`
+            ref = puppet_module.version
+            next unless ref
 
-      supplied_puppetfile.modules.map do |puppet_module|
-        next if ignored_modules.include? puppet_module.title
-        if puppet_module.class == ::R10K::Module::Forge
-          module_name = puppet_module.title.gsub('/', '-')
-          forge_version = ::PuppetForge::Module.find(module_name).current_release.version
-          installed_version = puppet_module.expected_version
-          {
-            name: puppet_module.title,
-            installed: installed_version,
-            latest: forge_version,
-            type: 'forge',
-            message: installed_version != forge_version ? :outdated : :current
-          }
-        
-        elsif puppet_module.class == R10K::Module::Git
-          # use helper; avoid `desired_ref`
-          # we do not want to deal with `:control_branch`
-          ref = puppet_module.version
-          next unless ref
+            remote = puppet_module.instance_variable_get(:@remote)
+            remote_refs = Git.ls_remote(remote)
 
-          remote = puppet_module.instance_variable_get(:@remote)
-          remote_refs = Git.ls_remote(remote)
+            # skip if ref is a branch
+            next if remote_refs['branches'].key?(ref)
 
-          # skip if ref is a branch
-          next if remote_refs['branches'].key?(ref)
+            if remote_refs['tags'].key?(ref)
+              # there are too many possible versioning conventions
+              # we have to be be opinionated here
+              # so semantic versioning (vX.Y.Z) it is for us
+              # as well as support for skipping the leading v letter
+              #
+              # register own version formats with
+              # Ra10ke::Dependencies.register_version_format(:name, &block)
+              latest_ref = get_latest_ref(remote_refs)
+            elsif ref.match(/^[a-z0-9]{40}$/)
+              ref = ref.slice(0,8)
+              # for sha just assume head should be tracked
+              latest_ref = remote_refs['head'][:sha].slice(0,8)
+            else
+              raise "Unable to determine ref type for #{puppet_module.title}"
+            end
+            {
+              name: puppet_module.title,
+              installed: ref,
+              latest: latest_ref,
+              type: 'git',
+              message: ref != latest_ref ? :outdated : :current
+            }
 
-          if remote_refs['tags'].key?(ref)
-            # there are too many possible versioning conventions
-            # we have to be be opinionated here
-            # so semantic versioning (vX.Y.Z) it is for us
-            # as well as support for skipping the leading v letter
-            #
-            # register own version formats with
-            # Ra10ke::Dependencies.register_version_format(:name, &block)
-            latest_ref = get_latest_ref(remote_refs)
-          elsif ref.match(/^[a-z0-9]{40}$/)
-            ref = ref.slice(0,8)
-            # for sha just assume head should be tracked
-            latest_ref = remote_refs['head'][:sha].slice(0,8)
-          else
-            raise "Unable to determine ref type for #{puppet_module.title}"
           end
-          {
-            name: puppet_module.title,
-            installed: ref,
-            latest: latest_ref,
-            type: 'git',
-            message: ref != latest_ref ? :outdated : :current
-          }
-
+        rescue R10K::Util::Subprocess::SubprocessError => e
+            {
+              name: puppet_module.title,
+              installed: nil,
+              latest: nil,
+              type: :error,
+              message: e.message
+            }
         end
-      end.compact
+        end
+      end
+      threads.map { |th| th.join.value }.compact
     end
 
     def outdated(supplied_puppetfile = puppetfile)
