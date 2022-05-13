@@ -34,4 +34,15 @@ RSpec.describe 'Ra10ke::Deprecation::Validation' do
 
     expect(instance.bad_mods?).to eq(false)
   end
+
+  describe 'handles large puppetfile' do
+    let(:puppetfile) do
+      File.join(fixtures_dir, 'Puppetfile_deprecation_issue')
+    end
+
+    it 'deprecated modules' do
+      expect(instance.bad_mods?).to eq(false)
+      expect(instance.deprecated_modules.count).to eq(0)
+    end
+  end
 end

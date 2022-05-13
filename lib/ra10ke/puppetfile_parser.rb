@@ -27,11 +27,11 @@ module Ra10ke
       def modules(puppetfile)
         @modules ||= begin
           return [] unless File.exist?(puppetfile)
-
           all_lines = File.read(puppetfile).lines.map(&:strip_comment)
           # remove comments from all the lines
-          lines_without_comments = all_lines.reject { |line| line.match(/#.*\n/) }.join("\n")
+          lines_without_comments = all_lines.reject { |line| line.match(/#.*\n/) || line.empty? }.join("\n")
           lines_without_comments.split(/^mod/).map do |line|
+            
             next nil if line =~ /^forge/
             next nil if line.empty?
 
