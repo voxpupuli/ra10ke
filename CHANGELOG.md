@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v2.0.0](https://github.com/voxpupuli/ra10ke/tree/v2.0.0) (2022-05-18)
+
+[Full Changelog](https://github.com/voxpupuli/ra10ke/compare/v1.2.0...v2.0.0)
+
+**Breaking changes:**
+
+- Bump minimal Ruby Version 2.4.0-\>2.7.0 [\#77](https://github.com/voxpupuli/ra10ke/pull/77) ([bastelfreak](https://github.com/bastelfreak))
+- Dependencies Table output  [\#72](https://github.com/voxpupuli/ra10ke/pull/72) ([logicminds](https://github.com/logicminds))
+
+**Implemented enhancements:**
+
+- Add Ruby 3.1 support [\#78](https://github.com/voxpupuli/ra10ke/pull/78) ([bastelfreak](https://github.com/bastelfreak))
+- Converts puppet forge module entries into puppetfile git entries [\#76](https://github.com/voxpupuli/ra10ke/pull/76) ([logicminds](https://github.com/logicminds))
+
+**Fixed bugs:**
+
+- incompatible with r10k gem \> 3.8 [\#57](https://github.com/voxpupuli/ra10ke/issues/57)
+- CI: Do not run twice [\#79](https://github.com/voxpupuli/ra10ke/pull/79) ([bastelfreak](https://github.com/bastelfreak))
+- Fix \#74 - server responded with 400 [\#75](https://github.com/voxpupuli/ra10ke/pull/75) ([logicminds](https://github.com/logicminds))
+- Fix \#70 - cache dir does not exist [\#71](https://github.com/voxpupuli/ra10ke/pull/71) ([logicminds](https://github.com/logicminds))
+
+**Closed issues:**
+
+- cache dir does not exist [\#70](https://github.com/voxpupuli/ra10ke/issues/70)
+
 ## [v1.2.0](https://github.com/voxpupuli/ra10ke/tree/v1.2.0) (2022-04-21)
 
 [Full Changelog](https://github.com/voxpupuli/ra10ke/compare/v1.1.0...v1.2.0)
