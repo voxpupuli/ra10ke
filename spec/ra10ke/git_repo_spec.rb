@@ -38,6 +38,10 @@ RSpec.describe 'Ra10ke::GitRepo' do
       expect(instance.remote_refs.first).to eq("1b3322d525e96bf7d0565b08703e2a44c90e7b4a\tHEAD\n")
     end
 
+    it '#get_ref_like' do
+      expect(instance.get_ref_like('8.0.0'))
+    end
+
     it '#valid_ref?' do
       expect(instance.valid_ref?('master')).to be true
     end

@@ -1,0 +1,28 @@
+mod 'choria',
+  :git => 'https://github.com/choria-io/puppet-choria',
+  :ref => '0.26.2'
+
+mod 'inifile',
+  :git => 'https://github.com/puppetlabs/puppetlabs-inifile',
+  :ref => '2.2.0'
+
+mod 'ruby',
+  :git => 'https://github.com/puppetlabs/puppetlabs-ruby.git',
+  :ref => 'v1.0.1'
+
+mod 'stdlib',
+  :git => 'https://github.com/puppetlabs/puppetlabs-stdlib',
+  :ref => '4.24.0'
+
+mod 'concat',
+  :git => 'https://github.com/puppetlabs/puppetlabs-concat',
+  :ref => '4.0.0'
+
+mod 'ntp',
+  :git => 'https://github.com/puppetlabs/puppetlabs-ntp',
+  :ref => '6.4.1'
+
+mod 'archive',
+  :git => 'https://github.com/voxpupuli/puppet-archive',
+  :ref => 'v3.1.1'
+

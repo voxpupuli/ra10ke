@@ -41,6 +41,7 @@ module Ra10ke
         define_task_duplicates(*args)
         define_task_install(*args)
         define_task_validate(*args)
+        define_task_print_git_conversion(*args)
       end
     end
 

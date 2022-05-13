@@ -85,8 +85,8 @@ module Ra10ke
       @all_refs ||= begin
         remote_refs.each_with_object([]) do |line, refs|
           sha, ref = line.split("\t")
+          next refs if line.include?('redirecting')
           next refs if sha.eql?('ref: refs/heads/master')
-
           _, type, name, subtype = ref.chomp.split('/')
           next refs unless name
 
@@ -97,6 +97,18 @@ module Ra10ke
           refs << { sha: sha, ref: ref.chomp, type: type, subtype: subtype, name: name }
         end
       end
+    end
+
+    # @summary searches all the refs for a ref similar to the name provided
+    #          This is useful when looking for tags if a v or not a v
+    # @param ref_name [String]
+    # @return [String] the matching ref_name or nil
+    def get_ref_like(ref_name)
+      return nil unless valid_url?
+      ref = all_refs.find do |ref|
+        ref[:name].include?(ref_name)
+      end
+      ref
     end
 
     # useful for mocking easily
