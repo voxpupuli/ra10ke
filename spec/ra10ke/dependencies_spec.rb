@@ -2,6 +2,8 @@
 require 'r10k/puppetfile'
 require 'spec_helper'
 require 'ra10ke/dependencies'
+require 'ra10ke'
+
 RSpec::Mocks.configuration.allow_message_expectations_on_nil = true
 
 RSpec.describe 'Ra10ke::Dependencies::Verification' do
@@ -89,6 +91,18 @@ RSpec.describe 'Ra10ke::Dependencies::Verification' do
           'tags' => test_tags,
         })).to eq(latest_tag)
       end
-     end
+    end
+
+    context 'convert to ref' do
+       
+      it 'run rake task' do
+        output_conversion = File.read(File.join(fixtures_dir, 'Puppetfile_git_conversion'))
+        require 'ra10ke'
+        Ra10ke::RakeTask.new do |t|
+          t.basedir = fixtures_dir
+        end
+        expect{Rake::Task['r10k:print_git_conversion'].invoke}.to output(output_conversion).to_stdout
+      end
+    end
   end
 end

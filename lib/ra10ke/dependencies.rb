@@ -138,6 +138,49 @@ module Ra10ke::Dependencies
     end
   end
 
+  def define_task_print_git_conversion(*_args)
+    desc "Convert and print forge modules to git format"
+    task :print_git_conversion do
+      require 'ra10ke/git_repo'
+      require 'r10k/puppetfile'
+      require 'puppet_forge'
+
+      PuppetForge.user_agent = "ra10ke/#{Ra10ke::VERSION}"
+      puppetfile = get_puppetfile
+      puppetfile.load!
+      PuppetForge.host = puppetfile.forge if puppetfile.forge =~ /^http/
+
+      # ignore file allows for "don't tell me about this"
+      ignore_modules = []
+      if File.exist?('.r10kignore')
+        ignore_modules = File.readlines('.r10kignore').each {|l| l.chomp!}
+      end
+      forge_mods = puppetfile.modules.find_all { |mod| mod.instance_of?(R10K::Module::Forge) && mod.v3_module.homepage_url? }
+     
+      threads = forge_mods.map do |mod|
+       Thread.new do 
+          source_url = mod.v3_module.attributes.dig(:current_release, :metadata, :source) || mod.v3_module.homepage_url 
+          # git:// does not work with ls-remote command, convert to https
+          source_url = source_url.gsub('git://', 'https://')
+          source_url = source_url.gsub(/\Agit\@(.*)\:(.*)/) do
+            "https://#{$1}/#{$2}"
+          end
+          repo = ::Ra10ke::GitRepo.new(source_url)
+          ref = repo.get_ref_like(mod.expected_version) 
+          ref_name = ref ? ref[:name] : "bad url or tag #{mod.expected_version} is missing"
+          <<~EOF
+          mod '#{mod.name}',
+            :git => '#{source_url}',
+            :ref => '#{ref_name}'
+
+          EOF
+        end
+      end
+      output = threads.map { |th| th.join.value }
+      puts output
+    end
+  end
+
   def define_task_dependencies(*_args)
     desc "Print outdated forge modules"
     task :dependencies do

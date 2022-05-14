@@ -68,6 +68,15 @@ Ignoring specific modules:
 Under specific conditions you may not wish to report on specific modules being out of date,
 to ignore a module create `.r10kignore` file in the same directory as your Puppetfile.
 
+### r10k::print_git_conversion
+This rake task will go through the puppetfile and convert forge based modules into git based modules using
+the modules't source repository and version tag.
+
+This feature is useful when you want to bring all the forge modules into git source control.  This assumes every module
+tags the release or provides a valid repo url.  We recommend to manually review
+the output provided by this task before replacing the forge based content in your puppetfile as not every module author 
+tagged a release or provided a working url.
+
 ### r10k:solve_dependencies
 
 Reads the Puppetfile in the current directory and uses the ruby 'solve' library to find
