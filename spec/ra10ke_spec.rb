@@ -63,13 +63,13 @@ RSpec.describe 'Ra10ke::RakeTask' do
       File.join(fixtures_dir, 'Puppetfile_with_bad_refs')
     end
 
-    # I suspect rake is caching something here and the puppetfile is 
-    # not being sent correctly as it is not using the file I specify. 
+    # I suspect rake is caching something here and the puppetfile is
+    # not being sent correctly as it is not using the file I specify.
     # The output should be different.
     # Testing this by itself works
     it '#run_validate_task' do
       task2 = instance.define_task_validate(args)
-      expect(task2.invoke).to be nil
+      expect(task2.invoke).to be_nil
     end
   end
 end

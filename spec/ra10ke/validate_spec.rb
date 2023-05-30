@@ -13,7 +13,7 @@ RSpec.describe 'Ra10ke::Validate::Validation' do
     File.join(fixtures_dir, 'Puppetfile')
   end
 
-  before(:each) do
+  before do
     allow_any_instance_of(Ra10ke::GitRepo).to receive(:valid_ref?).and_return(true)
     allow_any_instance_of(Ra10ke::GitRepo).to receive(:valid_url?).and_return(true)
   end
@@ -25,7 +25,7 @@ RSpec.describe 'Ra10ke::Validate::Validation' do
 
     it '#data is a hash with values' do
       keys = instance.all_modules.first.values
-      expect(keys).to eq(["ntp", "https://github.com/puppetlabs/puppetlabs-ntp", "81b34c6", true, true, "👍"])
+      expect(keys).to eq(['ntp', 'https://github.com/puppetlabs/puppetlabs-ntp', '81b34c6', true, true, '👍'])
     end
   end
 
@@ -38,7 +38,7 @@ RSpec.describe 'Ra10ke::Validate::Validation' do
       File.join(fixtures_dir, 'Puppetfile_with_bad_refs')
     end
 
-    before(:each) do
+    before do
       working = double('Ra1ke::GitRepo', url: 'https://github.com/vshn/puppet-gitlab')
       expect(working).to receive(:valid_ref?).with('00397b86dfb3487d9df768cbd3698d362132b5bf').and_return(false)
       expect(working).to receive(:valid_commit?).with('00397b86dfb3487d9df768cbd3698d362132b5bf').and_return(true)
@@ -62,7 +62,7 @@ RSpec.describe 'Ra10ke::Validate::Validation' do
   end
 
   describe 'control_branch' do
-    before(:each) do
+    before do
       ENV.delete 'CONTROL_BRANCH'
       ENV.delete 'CONTROL_BRANCH_FALLBACK'
     end
@@ -99,7 +99,9 @@ RSpec.describe 'Ra10ke::Validate::Validation' do
     it 'correctly falls back to fallback if no current branch but default branch' do
       ENV['CONTROL_BRANCH_FALLBACK'] = 'env-control_branch_fallback'
       allow(Ra10ke::GitRepo).to receive(:current_branch).and_return(nil)
-      expect(instance.all_modules.find { |m| m[:name] == 'hiera_controlwithdefault' }[:ref]).to eq('env-control_branch_fallback')
+      expect(instance.all_modules.find do |m|
+               m[:name] == 'hiera_controlwithdefault'
+             end[:ref]).to eq('env-control_branch_fallback')
     end
 
     it 'correctly falls back to default_branch if no current branch with override' do
@@ -138,6 +140,6 @@ RSpec.describe 'Ra10ke::Validate::Validation' do
     keys = instance.all_modules.first.values
 
     expect(keys).to eq(['gitlab', 'https://github.com/vshn/puppet-gitlab',
-                        '00397b86dfb3487d9df768cbd3698d362132b5bf', true, true, '👍'])
+                        '00397b86dfb3487d9df768cbd3698d362132b5bf', true, true, '👍',])
   end
 end

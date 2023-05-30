@@ -27,18 +27,16 @@ module Ra10ke::Solve
       PuppetForge.user_agent = "ra10ke/#{Ra10ke::VERSION}"
       puppetfile = get_puppetfile
       puppetfile.load!
-      PuppetForge.host = puppetfile.forge if puppetfile.forge =~ /^http/
+      PuppetForge.host = puppetfile.forge if /^http/.match?(puppetfile.forge)
 
       # ignore file allows for "don't tell me about this"
       ignore_modules = []
-      if File.exist?('.r10kignore')
-        ignore_modules = File.readlines('.r10kignore').each(&:chomp!)
-      end
+      ignore_modules = File.readlines('.r10kignore').each(&:chomp!) if File.exist?('.r10kignore')
       # Actual new logic begins here:
       cache = (ENV['XDG_CACHE_DIR'] || File.expand_path('~/.cache'))
 
       FileUtils.mkdir_p(cache)
-      
+
       # Metadata cache, since the Forge is slow:
       @metadata_cache = YAML::Store.new File.join(cache, 'ra10ke.metadata_cache')
       # The graph of available module versions
@@ -54,7 +52,8 @@ module Ra10ke::Solve
 
       puppetfile.modules.each do |puppet_module|
         next if ignore_modules.include? puppet_module.title
-        if puppet_module.class == R10K::Module::Forge
+
+        if puppet_module.instance_of?(R10K::Module::Forge)
           module_name = puppet_module.title.tr('/', '-')
           installed_version = puppet_module.expected_version
           puts "Processing Forge module #{module_name}-#{installed_version}"
@@ -81,7 +80,8 @@ module Ra10ke::Solve
           add_reqs_to_graph(mod, meta)
         end
 
-        next unless puppet_module.class == R10K::Module::Git
+        next unless puppet_module.instance_of?(R10K::Module::Git)
+
         # This downloads the git module to modules/modulename
         meta = fetch_git_metadata(puppet_module)
         version = get_key_or_sym(meta, :version)
@@ -97,9 +97,7 @@ module Ra10ke::Solve
       end
       puts
       puts 'Resolving dependencies...'
-      if allow_major_bump
-        puts 'WARNING:  Potentially breaking updates are allowed for this resolution'
-      end
+      puts 'WARNING:  Potentially breaking updates are allowed for this resolution' if allow_major_bump
       result = Solve.it!(@graph, @demands, sorted: true)
       puts
       print_module_diff(@current_modules, result)
@@ -130,7 +128,7 @@ module Ra10ke::Solve
       return {
         version: '0.0.0',
         name: puppet_module.title,
-        dependencies: []
+        dependencies: [],
       }
     end
     metadata = R10K::Module::MetadataFile.new(metadata_path)
@@ -138,7 +136,7 @@ module Ra10ke::Solve
     {
       version: metadata.version,
       name: metadata.name,
-      dependencies: metadata.dependencies
+      dependencies: metadata.dependencies,
     }
   end
 
@@ -150,7 +148,7 @@ module Ra10ke::Solve
   # At least puppet-extlib has malformed metadata
   def get_version_req(dep)
     req = get_key_or_sym(dep, :version_requirement)
-    req = get_key_or_sym(dep, :version_range) unless req
+    req ||= get_key_or_sym(dep, :version_range)
     req
   end
 
@@ -186,17 +184,14 @@ module Ra10ke::Solve
       # actually ask the solver for the versioned thing
       @demands.add(name) unless no_demands
       ver = get_version_req(dep)
-      unless ver
-        # no version specified, so anything will do
-        ver = '>=0.0.0'
-      end
-      ver.split(/(?=[<])/).each do |bound|
+      ver ||= '>=0.0.0'
+      ver.split(/(?=<)/).each do |bound|
         bound.strip!
         v = begin
-              Semverse::Constraint.new(bound)
-            rescue
-              nil
-            end
+          Semverse::Constraint.new(bound)
+        rescue StandardError
+          nil
+        end
         if v
           artifact.depends(name, v.to_s)
         else
@@ -206,14 +201,16 @@ module Ra10ke::Solve
       # Find the dependency in the forge, unless it's already been processed
       # and add its releases to the global graph
       next unless @processed_modules.add?(name)
+
       puts "Fetching module info for #{name}"
       mod = begin
-              PuppetForge::Module.find(name)
-            rescue
-              # It's probably a git module
-              nil
-            end
+        PuppetForge::Module.find(name)
+      rescue StandardError
+        # It's probably a git module
+        nil
+      end
       next unless mod # Git module, or non-forge dependency. Skip to next for now.
+
       # Fetching metadata for all releases takes ages (which is weird, since it's mostly static info)
       mod.releases.take(FETCH_LIMIT).each do |rel|
         meta = get_release_metadata(name, rel)

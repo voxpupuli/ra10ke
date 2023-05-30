@@ -27,5 +27,5 @@ end
 require 'rspec/core'
 
 def fixtures_dir
-    File.join(__dir__, 'fixtures')
+  File.join(__dir__, 'fixtures')
 end

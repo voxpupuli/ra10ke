@@ -82,20 +82,19 @@ module Ra10ke
     #     :sha=>"fcc0532bbc5a5b65f3941738339e9cc7e3d767ce", :ref=>"refs/pull/249/head", :type=>:pull, :subtype=>:head, :name=>"249"},
     #     :sha=>"8d54891fa5df75890ee15d53080c2a81b4960f92", :ref=>"refs/pull/267/head", :type=>:pull, :subtype=>:head, :name=>"267"}]
     def all_refs
-      @all_refs ||= begin
-        remote_refs.each_with_object([]) do |line, refs|
-          sha, ref = line.split("\t")
-          next refs if line.include?('redirecting')
-          next refs if sha.eql?('ref: refs/heads/master')
-          _, type, name, subtype = ref.chomp.split('/')
-          next refs unless name
+      @all_refs ||= remote_refs.each_with_object([]) do |line, refs|
+        sha, ref = line.split("\t")
+        next refs if line.include?('redirecting')
+        next refs if sha.eql?('ref: refs/heads/master')
 
-          type = :tag if type.eql?('tags')
-          type = type.to_sym
-          subtype = subtype.to_sym if subtype
-          type = :branch if type.eql?(:heads)
-          refs << { sha: sha, ref: ref.chomp, type: type, subtype: subtype, name: name }
-        end
+        _, type, name, subtype = ref.chomp.split('/')
+        next refs unless name
+
+        type = :tag if type.eql?('tags')
+        type = type.to_sym
+        subtype = subtype.to_sym if subtype
+        type = :branch if type.eql?(:heads)
+        refs << { sha: sha, ref: ref.chomp, type: type, subtype: subtype, name: name }
       end
     end
 
@@ -105,10 +104,10 @@ module Ra10ke
     # @return [String] the matching ref_name or nil
     def get_ref_like(ref_name)
       return nil unless valid_url?
-      ref = all_refs.find do |ref|
+
+      all_refs.find do |ref|
         ref[:name].include?(ref_name)
       end
-      ref
     end
 
     # useful for mocking easily

@@ -18,7 +18,7 @@ class String
     colorize(33)
   end
 
-  # removes specified markes from string. 
+  # removes specified markes from string.
   # @return [String] - the string with markers removed
   def strip_comment(markers = ['#', "\n"])
     re = Regexp.union(markers)
