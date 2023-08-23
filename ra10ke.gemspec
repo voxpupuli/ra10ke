@@ -16,15 +16,15 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   spec.required_ruby_version = '>= 2.7.0'
 
-  spec.add_dependency 'git'
-  spec.add_dependency 'puppet_forge'
-  spec.add_dependency 'r10k', '>= 2.6.5'
-  spec.add_dependency 'rake'
-  spec.add_dependency 'semverse', '>= 2.0'
-  spec.add_dependency 'solve'
+  spec.add_dependency 'git', '~> 1.18'
+  spec.add_dependency 'puppet_forge', '~> 5.0', '>= 5.0.1'
+  spec.add_dependency 'r10k', '>= 2.6.5', '< 5'
+  spec.add_dependency 'rake', '~> 13.0', '>= 13.0.6'
+  spec.add_dependency 'semverse', '>= 2.0', '< 4'
+  spec.add_dependency 'solve', '~> 4.0', '>= 4.0.4'
   spec.add_dependency 'table_print', '~> 1.5.6'
-  spec.add_development_dependency 'pry'
+  spec.add_development_dependency 'pry', '~> 0.14.2'
   spec.add_development_dependency 'rspec', '~> 3.6'
-  spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'simplecov', '~> 0.22.0'
   spec.add_development_dependency 'voxpupuli-rubocop', '~> 2.0.0'
 end
