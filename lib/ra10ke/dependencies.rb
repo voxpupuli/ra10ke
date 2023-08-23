@@ -5,6 +5,9 @@ require 'table_print'
 require 'git'
 
 module Ra10ke::Dependencies
+  GOOD_EMOJI = ENV['GOOD_EMOJI'] || '👍'
+  BAD_EMOJI = ENV['BAD_EMOJI'] || '😨'
+
   class Verification
     def self.version_formats
       @version_formats ||= {}
@@ -185,6 +188,12 @@ module Ra10ke::Dependencies
       PuppetForge.host = puppetfile.forge if /^http/.match?(puppetfile.forge)
       dependencies = Ra10ke::Dependencies::Verification.new(puppetfile)
       dependencies.print_table(dependencies.outdated)
+
+      if dependencies.outdated.any?
+        abort(BAD_EMOJI + '  Not all modules in the Puppetfile are up2date. '.red + BAD_EMOJI)
+      else
+        puts(GOOD_EMOJI + '  All modules in the Puppetfile are up2date. '.green + GOOD_EMOJI)
+      end
     end
   end
 end
