@@ -5,7 +5,7 @@ require 'ra10ke/puppetfile_parser'
 
 module Ra10ke::Duplicates
   def define_task_duplicates(*_args)
-    desc "Check Puppetfile for duplicates"
+    desc 'Check Puppetfile for duplicates'
     task :duplicates do
       duplicates = Ra10ke::Duplicates::Verification.new(get_puppetfile.puppetfile_path).duplicates
       exit_code = 0

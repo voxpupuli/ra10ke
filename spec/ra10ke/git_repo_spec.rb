@@ -10,7 +10,7 @@ RSpec.describe 'Ra10ke::GitRepo' do
     expect(Ra10ke::GitRepo.new(url)).to be_a Ra10ke::GitRepo
   end
 
-  it 'should not run_command more than once' do
+  it 'does not run_command more than once' do
     i = Ra10ke::GitRepo.new(url)
     expect(i).to receive(:run_command).with("git ls-remote --symref #{url}").once
     i.valid_url?
@@ -26,7 +26,7 @@ RSpec.describe 'Ra10ke::GitRepo' do
 
     let(:reflist) { File.read(File.join(fixtures_dir, 'refs', 'gitlab.txt')) }
 
-    before(:each) do
+    before do
       allow(instance).to receive(:run_command).with("git ls-remote --symref #{url}").and_return([reflist, true])
     end
 
@@ -68,20 +68,20 @@ RSpec.describe 'Ra10ke::GitRepo' do
       refs = instance.all_refs
       expect(refs).to be_a Array
       expect(refs.last).to eq(
-        { name: 'v5.0.0^{}', ref: 'refs/tags/v5.0.0^{}', sha: '1febd15f90d32e6b3d6c242a70db386b2ef1942c', subtype: nil, type: :tag }
+        { name: 'v5.0.0^{}', ref: 'refs/tags/v5.0.0^{}', sha: '1febd15f90d32e6b3d6c242a70db386b2ef1942c', subtype: nil,
+          type: :tag, },
       )
     end
   end
 
   describe 'bad url' do
     let(:url) { 'https://github.com/nwops/typo' }
-
-    before(:each) do
-      allow(instance).to receive(:run_command).with("git ls-remote --symref #{url}").and_return(['', false])
-    end
-
     let(:instance) do
       Ra10ke::GitRepo.new(url)
+    end
+
+    before do
+      allow(instance).to receive(:run_command).with("git ls-remote --symref #{url}").and_return(['', false])
     end
 
     it '#all_refs' do

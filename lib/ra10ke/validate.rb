@@ -8,7 +8,6 @@ require 'ra10ke/git_repo'
 
 module Ra10ke
   module Validate
-
     GOOD_EMOJI = ENV['GOOD_EMOJI'] || '👍'
     BAD_EMOJI = ENV['BAD_EMOJI'] || '😨'
 
@@ -64,7 +63,7 @@ module Ra10ke
               ref: ref,
               valid_url?: repo.valid_url?,
               valid_ref?: valid_ref,
-              status: valid_ref ? Ra10ke::Validate::GOOD_EMOJI : Ra10ke::Validate::BAD_EMOJI
+              status: valid_ref ? Ra10ke::Validate::GOOD_EMOJI : Ra10ke::Validate::BAD_EMOJI,
             }
           end
         end

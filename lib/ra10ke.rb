@@ -48,7 +48,8 @@ module Ra10ke
     def get_puppetfile
       R10K::Puppetfile.new(@basedir, @moduledir, @puppetfile_path, @puppetfile_name, @force)
     rescue ArgumentError # R10k < 2.6.0
-      R10K::Puppetfile.new(@basedir, @moduledir, @puppetfile_path || File.join(@basedir, @puppetfile_name || 'Puppetfile'))
+      R10K::Puppetfile.new(@basedir, @moduledir,
+                           @puppetfile_path || File.join(@basedir, @puppetfile_name || 'Puppetfile'))
     end
   end
 end
