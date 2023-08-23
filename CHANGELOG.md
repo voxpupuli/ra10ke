@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v3.0.0](https://github.com/voxpupuli/ra10ke/tree/v3.0.0) (2023-08-23)
+
+[Full Changelog](https://github.com/voxpupuli/ra10ke/compare/v2.0.0...v3.0.0)
+
+**Breaking changes:**
+
+- Add exit codes to dependency check [\#86](https://github.com/voxpupuli/ra10ke/pull/86) ([sebastianrakel](https://github.com/sebastianrakel))
+- Drop Ruby 2.6 support & Implement voxpupuli-rubocop [\#85](https://github.com/voxpupuli/ra10ke/pull/85) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- Add Ruby 3.2 support / apply Vox Pupuli CI best practices [\#89](https://github.com/voxpupuli/ra10ke/pull/89) ([bastelfreak](https://github.com/bastelfreak))
+
+**Fixed bugs:**
+
+- module with https + token is failing [\#84](https://github.com/voxpupuli/ra10ke/issues/84)
+
+**Merged pull requests:**
+
+- dependencies: Add strict version boundaries [\#91](https://github.com/voxpupuli/ra10ke/pull/91) ([bastelfreak](https://github.com/bastelfreak))
+- Bump actions/checkout from 2 to 3 [\#90](https://github.com/voxpupuli/ra10ke/pull/90) ([dependabot[bot]](https://github.com/apps/dependabot))
+- dependabot: check for github actions and gems [\#88](https://github.com/voxpupuli/ra10ke/pull/88) ([bastelfreak](https://github.com/bastelfreak))
+- Fix fixture for deprecation test [\#87](https://github.com/voxpupuli/ra10ke/pull/87) ([sebastianrakel](https://github.com/sebastianrakel))
+
 ## [v2.0.0](https://github.com/voxpupuli/ra10ke/tree/v2.0.0) (2022-05-18)
 
 [Full Changelog](https://github.com/voxpupuli/ra10ke/compare/v1.2.0...v2.0.0)
