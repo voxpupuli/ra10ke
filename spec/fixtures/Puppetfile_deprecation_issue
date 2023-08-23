@@ -5,8 +5,8 @@ mod 'puppet/ferm', :latest
 mod 'puppet/borg', :latest
 mod 'puppet/wireguard', :latest
 mod 'puppet/bird', :latest
-mod 'herculesteam/augeasproviders_pam', :latest
-mod 'herculesteam/augeasproviders_shellvar', :latest
+mod 'puppet/augeasproviders_pam', :latest
+mod 'puppet/augeasproviders_shellvar', :latest
 mod 'puppetlabs/vcsrepo', :latest
 mod 'saz/ssh', :latest
 mod 'puppet/r10k', :latest
@@ -22,8 +22,8 @@ mod 'theforeman/foreman', :latest
 mod 'theforeman/puppet', :latest
 mod 'theforeman/foreman_proxy', :latest
 mod 'puppet/nftables', :latest
-mod 'herculesteam/augeasproviders_sysctl', :latest
-mod 'camptocamp/catalog_diff', :latest
+mod 'puppet/augeasproviders_sysctl', :latest
+mod 'puppet/catalog_diff', :latest
 mod 'puppet/unattended_upgrades', :latest
 mod 'puppet/selinux', :latest
 mod 'choria/choria', :latest
@@ -34,7 +34,7 @@ mod 'jsok/vault',
   ref: 'test'
 
 # dependencies
-mod 'herculesteam/augeasproviders_core', :latest
+mod 'puppet/augeasproviders_core', :latest
 mod 'puppetlabs/stdlib', :latest
 mod 'choria/mcollective', :latest
 mod 'puppetlabs/concat', :latest
