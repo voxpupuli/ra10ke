@@ -15,6 +15,6 @@ RSpec.describe 'Ra10ke::Resolver::Instance' do
   end
 
   it 'resolves the puppetfile' do
-    expect(instance.resolve).to be nil
+    expect(instance.resolve).to be_nil
   end
 end
