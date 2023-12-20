@@ -33,7 +33,7 @@ module Ra10ke::Solve
       ignore_modules = []
       ignore_modules = File.readlines('.r10kignore').each(&:chomp!) if File.exist?('.r10kignore')
       # Actual new logic begins here:
-      cache = (ENV['XDG_CACHE_DIR'] || File.expand_path('~/.cache'))
+      cache = ENV['XDG_CACHE_DIR'] || File.expand_path('~/.cache')
 
       FileUtils.mkdir_p(cache)
 
