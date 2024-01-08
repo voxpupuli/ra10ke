@@ -26,5 +26,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'pry', '~> 0.14.2'
   spec.add_development_dependency 'rspec', '~> 3.6'
   spec.add_development_dependency 'simplecov', '~> 0.22.0'
-  spec.add_development_dependency 'voxpupuli-rubocop', '~> 2.2.0'
+  spec.add_development_dependency 'voxpupuli-rubocop', '~> 2.3.0'
 end
