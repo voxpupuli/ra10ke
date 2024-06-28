@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v3.1.0](https://github.com/voxpupuli/ra10ke/tree/v3.1.0) (2024-06-28)
+
+[Full Changelog](https://github.com/voxpupuli/ra10ke/compare/v3.0.0...v3.1.0)
+
+**Implemented enhancements:**
+
+- Update git requirement from ~\> 1.18 to \>= 1.18, \< 3.0 [\#103](https://github.com/voxpupuli/ra10ke/pull/103) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Add Ruby 3.3 to CI [\#100](https://github.com/voxpupuli/ra10ke/pull/100) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- Update voxpupuli-rubocop requirement from ~\> 2.6.0 to ~\> 2.8.0 [\#104](https://github.com/voxpupuli/ra10ke/pull/104) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Gemfile: add faraday as GCG dependency [\#101](https://github.com/voxpupuli/ra10ke/pull/101) ([bastelfreak](https://github.com/bastelfreak))
+- Update voxpupuli-rubocop requirement from ~\> 2.4.0 to ~\> 2.6.0 [\#99](https://github.com/voxpupuli/ra10ke/pull/99) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update voxpupuli-rubocop requirement from ~\> 2.3.0 to ~\> 2.4.0 [\#97](https://github.com/voxpupuli/ra10ke/pull/97) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update voxpupuli-rubocop requirement from ~\> 2.2.0 to ~\> 2.3.0 [\#96](https://github.com/voxpupuli/ra10ke/pull/96) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update voxpupuli-rubocop requirement from ~\> 2.0.0 to ~\> 2.2.0 [\#95](https://github.com/voxpupuli/ra10ke/pull/95) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v3.0.0](https://github.com/voxpupuli/ra10ke/tree/v3.0.0) (2023-08-23)
 
 [Full Changelog](https://github.com/voxpupuli/ra10ke/compare/v2.0.0...v3.0.0)
@@ -22,7 +40,6 @@ All notable changes to this project will be documented in this file.
 **Merged pull requests:**
 
 - dependencies: Add strict version boundaries [\#91](https://github.com/voxpupuli/ra10ke/pull/91) ([bastelfreak](https://github.com/bastelfreak))
-- Bump actions/checkout from 2 to 3 [\#90](https://github.com/voxpupuli/ra10ke/pull/90) ([dependabot[bot]](https://github.com/apps/dependabot))
 - dependabot: check for github actions and gems [\#88](https://github.com/voxpupuli/ra10ke/pull/88) ([bastelfreak](https://github.com/bastelfreak))
 - Fix fixture for deprecation test [\#87](https://github.com/voxpupuli/ra10ke/pull/87) ([sebastianrakel](https://github.com/sebastianrakel))
 
