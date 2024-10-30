@@ -14,10 +14,10 @@ Gem::Specification.new do |spec|
 
   spec.files         = `git ls-files`.split($/)
   spec.require_paths = ['lib']
-  spec.required_ruby_version = '>= 2.7.0'
+  spec.required_ruby_version = '>= 3.1.0'
 
   spec.add_dependency 'git', '>= 1.18', '< 3.0'
-  spec.add_dependency 'puppet_forge', '~> 5.0', '>= 5.0.1'
+  spec.add_dependency 'puppet_forge', '~> 6.0'
   spec.add_dependency 'r10k', '>= 2.6.5', '< 5'
   spec.add_dependency 'rake', '~> 13.0', '>= 13.0.6'
   spec.add_dependency 'semverse', '>= 2.0', '< 4'
