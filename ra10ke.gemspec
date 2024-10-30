@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'git', '>= 1.18', '< 3.0'
   spec.add_dependency 'puppet_forge', '~> 6.0'
-  spec.add_dependency 'r10k', '>= 2.6.5', '< 5'
+  #spec.add_dependency 'r10k', '>= 2.6.5', '< 5'
   spec.add_dependency 'rake', '~> 13.0', '>= 13.0.6'
   spec.add_dependency 'semverse', '>= 2.0', '< 4'
   spec.add_dependency 'solve', '~> 4.0', '>= 4.0.4'
