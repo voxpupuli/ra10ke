@@ -12,3 +12,5 @@ group :coverage, optional: ENV['COVERAGE'] != 'yes' do
   gem 'codecov', require: false
   gem 'simplecov-console', require: false
 end
+
+gem 'r10k', git: 'https://github.com/justinstoller/r10k', branch: 'support-more-minitar-versions'
