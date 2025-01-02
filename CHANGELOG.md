@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v4.0.0](https://github.com/voxpupuli/ra10ke/tree/v4.0.0) (2025-01-02)
+
+[Full Changelog](https://github.com/voxpupuli/ra10ke/compare/v3.1.0...v4.0.0)
+
+**Breaking changes:**
+
+- Require Ruby 3.1 & puppet\_forge 6 & r10k 5 [\#106](https://github.com/voxpupuli/ra10ke/pull/106) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- Update pry requirement from ~\> 0.14.2 to ~\> 0.15.2 [\#114](https://github.com/voxpupuli/ra10ke/pull/114) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Cleanup Rakefile; remove unused rake tasks [\#109](https://github.com/voxpupuli/ra10ke/pull/109) ([bastelfreak](https://github.com/bastelfreak))
+- Update voxpupuli-rubocop requirement from ~\> 2.8.0 to ~\> 3.0.0 [\#108](https://github.com/voxpupuli/ra10ke/pull/108) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v3.1.0](https://github.com/voxpupuli/ra10ke/tree/v3.1.0) (2024-06-28)
 
 [Full Changelog](https://github.com/voxpupuli/ra10ke/compare/v3.0.0...v3.1.0)
