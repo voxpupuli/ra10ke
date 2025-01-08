@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v4.1.0](https://github.com/voxpupuli/ra10ke/tree/v4.1.0) (2025-01-08)
+
+[Full Changelog](https://github.com/voxpupuli/ra10ke/compare/v4.0.0...v4.1.0)
+
+**Implemented enhancements:**
+
+- Add Ruby 3.4 support [\#119](https://github.com/voxpupuli/ra10ke/pull/119) ([bastelfreak](https://github.com/bastelfreak))
+- Improve dependencies check against :control\_branch [\#116](https://github.com/voxpupuli/ra10ke/pull/116) ([ananace](https://github.com/ananace))
+
+**Fixed bugs:**
+
+- Fix false positive errors when ra10ke tries to validate modules with  `branch: :control_branch` [\#117](https://github.com/voxpupuli/ra10ke/issues/117)
+
 ## [v4.0.0](https://github.com/voxpupuli/ra10ke/tree/v4.0.0) (2025-01-02)
 
 [Full Changelog](https://github.com/voxpupuli/ra10ke/compare/v3.1.0...v4.0.0)
