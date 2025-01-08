@@ -59,10 +59,12 @@ module Ra10ke::Dependencies
     # @note does not include ignored modules or modules up2date
     def processed_modules(supplied_puppetfile = puppetfile)
       threads = []
-      threads = supplied_puppetfile.modules.map do |puppet_module|
-        Thread.new do
-          next if ignored_modules.include? puppet_module.title
+      supplied_puppetfile.modules.each do |puppet_module|
+        next if ignored_modules.include? puppet_module.title
+        # Ignore modules where ref is explicitly set to control branch
+        next if puppet_module.instance_of?(R10K::Module::Git) && puppet_module.desired_ref == :control_branch
 
+        threads << Thread.new do
           if puppet_module.instance_of?(::R10K::Module::Forge)
             module_name = puppet_module.title.tr('/', '-')
             forge_version = ::PuppetForge::Module.find(module_name).current_release.version
@@ -76,8 +78,7 @@ module Ra10ke::Dependencies
             }
 
           elsif puppet_module.instance_of?(R10K::Module::Git)
-            # use helper; avoid `desired_ref`
-            # we do not want to deal with `:control_branch`
+            # use helper; let r10k figure out correct ref
             ref = puppet_module.version
             next unless ref
 
@@ -185,6 +186,24 @@ module Ra10ke::Dependencies
     task :dependencies do
       PuppetForge.user_agent = "ra10ke/#{Ra10ke::VERSION}"
       puppetfile = get_puppetfile
+      if puppetfile.respond_to? :environment=
+        # Use a fake environment object to reduce log spam and keep :control_branch reference for R10k >= 3.10.0
+        fake_env = Object.new
+        fake_env.instance_eval do
+          def module_conflicts?(*)
+            false
+          end
+
+          def name
+            'test'
+          end
+
+          def ref
+            :control_branch
+          end
+        end
+        puppetfile.environment = fake_env
+      end
       PuppetForge.host = puppetfile.forge if /^http/.match?(puppetfile.forge)
       dependencies = Ra10ke::Dependencies::Verification.new(puppetfile)
       dependencies.print_table(dependencies.outdated)
