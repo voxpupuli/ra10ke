@@ -65,7 +65,7 @@ module Ra10ke
 
       found = all_refs.find do |data|
         # we don't need to bother with these types
-        next if data[:type] == :pull || data[:type] == :merge_request
+        next if %i[pull merge_request].include?(data[:type])
 
         # is the name equal to the tag or branch?  Is the commit sha equal?
         data[:name].eql?(ref) || data[:sha].slice(0, 8).eql?(ref.slice(0, 8))
