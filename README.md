@@ -1,5 +1,4 @@
-ra10ke
-======
+# ra10ke
 
 [![License](https://img.shields.io/github/license/voxpupuli/ra10ke.svg)](https://github.com/voxpupuli/ra10ke/blob/master/LICENSE.txt)
 [![Test](https://github.com/voxpupuli/ra10ke/actions/workflows/test.yml/badge.svg)](https://github.com/voxpupuli/ra10ke/actions/workflows/test.yml)
@@ -14,6 +13,7 @@ Rake tasks related to [R10K](https://github.com/puppetlabs/r10k) and
 ## Usage
 
 Add the following line to your `Gemfile`:
+
 ```ruby
 gem 'ra10ke'
 ```
@@ -60,8 +60,9 @@ This rake task goes through the modules that are declared in the Puppetfile,
 and prints outdated modules.
 
 Supports:
-  - Puppet Forge
-  - Git (SHA-ref and Tagging)
+
+- Puppet Forge
+- Git (SHA-ref and Tagging)
 
 Ignoring specific modules:
 
@@ -69,12 +70,13 @@ Under specific conditions you may not wish to report on specific modules being o
 to ignore a module create `.r10kignore` file in the same directory as your Puppetfile.
 
 ### r10k::print_git_conversion
+
 This rake task will go through the puppetfile and convert forge based modules into git based modules using
 the modules't source repository and version tag.
 
 This feature is useful when you want to bring all the forge modules into git source control.  This assumes every module
 tags the release or provides a valid repo url.  We recommend to manually review
-the output provided by this task before replacing the forge based content in your puppetfile as not every module author 
+the output provided by this task before replacing the forge based content in your puppetfile as not every module author
 tagged a release or provided a working url.
 
 ### r10k:solve_dependencies
@@ -95,34 +97,34 @@ Reads the Puppetfile in the current directory and installs them under the `path`
 
 #### Limitations
 
-  * It works only with modules from the [Forge](https://forge.puppetlabs.com), and Git.
-  SVN modules will be ignored.
-  * Git support is explicitly SHA Ref and Tag supported. If tag is used it must follow
-  `v0.0.0` convention, other wise it will be ignored.
-  * The version has to be specified explicitly. If it is omitted, or it is
-  `:latest`, the module will be ignored.
-  
+- It works only with modules from the [Forge](https://forge.puppetlabs.com), and Git.
+SVN modules will be ignored.
+- Git support is explicitly SHA Ref and Tag supported. If tag is used it must follow
+`v0.0.0` convention, other wise it will be ignored.
+- The version has to be specified explicitly. If it is omitted, or it is
+`:latest`, the module will be ignored.
+
 ### r10k:validate[path]
-The validate rake task will determine if the url is a valid url by connecting 
+
+The validate rake task will determine if the url is a valid url by connecting
 to the repository and verififying it actually exists and can be accessed.
 Additional if a branch, tag, or ref is specified in the Puppetfile the validate
 task will also verify that that branch/tag/ref exists in the remote repository.
 
 If you have ever deployed r10k to production only to find out a tag or branch is
-missing this validate task will catch that issue.  
+missing this validate task will catch that issue.
 
 A exit status of 0 is returned if there are no faults, while a 1 is returned if
-any module has a bad status. 
+any module has a bad status.
 
 Status emojis can be customized by setting the following environment variables.
 
 Example
 
- * `GOOD_EMOJI='👍'`
- * `BAD_EMOJI='😨'`
+- `GOOD_EMOJI='👍'`
+- `BAD_EMOJI='😨'`
 
-
-```
+```text
 NAME     | URL                                           | REF                            | STATUS
 ---------|-----------------------------------------------|--------------------------------|-------
 splunk   | https://github.com/cudgel/splunk.git          | dev                            | 👍
@@ -147,7 +149,7 @@ All found duplicates are reported along with their source and their version
 
 Example
 
-```
+```text
 puppet:
 - abstractit/puppet from the forge at version 2.4.1
 - theforeman/puppet from the forge at version 12.0.1
@@ -167,14 +169,34 @@ for modules that are marked as deprecated on the Forge.
 
 Example
 
-```
-NAME                    | DEPRECATED_AT            
+```text
+NAME                    | DEPRECATED_AT
 ------------------------|--------------------------
-kemra102-auditd         | 2021-07-22 12:11:46      
-puppet-staging          | 2018-12-18 11:11:29      
-puppetlabs-resource_api | 2021-03-31 12:53:24      
-puppetlabs-ruby         | 2021-04-22 10:29:42      
-puppetlabs-translate    | 2021-03-19 10:11:51      
+kemra102-auditd         | 2021-07-22 12:11:46
+puppet-staging          | 2018-12-18 11:11:29
+puppetlabs-resource_api | 2021-03-31 12:53:24
+puppetlabs-ruby         | 2021-04-22 10:29:42
+puppetlabs-translate    | 2021-03-19 10:11:51
 
 Error: Puppetfile contains deprecated modules.
+```
+
+### r10k:diff[production,development]
+
+This rake task will compare the modules in two branches and show the differences between them.
+This is useful to see what modules have been changed, added or removed between two branches.
+To pass the branches you may have to quote the arguments to prevent the shell from interpreting the `[]`.
+For example `rake "r10k:diff[production,development]"`
+
+Example
+
+```text
+NAME    | VERSION_A                      | VERSION_B                      | TYPE_A | TYPE_B | STATUS
+--------|--------------------------------|--------------------------------|--------|--------|--------
+inifile | 5.0.1                          | 6.2.0                          | forge  | forge  | changed
+stdlib  | 7.0.1                          | 1b6f89afdde0df7f9433a163d5c... | forge  | vcs    | changed
+systemd | 1.2.3                          |                                | forge  |        | removed
+apache  | 1b6f89afdde0df7f9433a163d5c... |                                | vcs    |        | removed
+rwaffen | v1.0.0                         | v1.0.3                         | vcs    | vcs    | changed
+haproxy |                                | 1.0.0                          |        | forge  | added
 ```
