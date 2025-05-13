@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v4.3.0](https://github.com/voxpupuli/ra10ke/tree/v4.3.0) (2025-05-13)
+
+[Full Changelog](https://github.com/voxpupuli/ra10ke/compare/v4.2.0...v4.3.0)
+
+**Implemented enhancements:**
+
+- Add diff task to compare module differences between two branches [\#123](https://github.com/voxpupuli/ra10ke/pull/123) ([rwaffen](https://github.com/rwaffen))
+
 ## [v4.2.0](https://github.com/voxpupuli/ra10ke/tree/v4.2.0) (2025-02-28)
 
 [Full Changelog](https://github.com/voxpupuli/ra10ke/compare/v4.1.0...v4.2.0)
