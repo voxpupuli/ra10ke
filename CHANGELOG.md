@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v4.4.0](https://github.com/voxpupuli/ra10ke/tree/v4.4.0) (2025-06-08)
+
+[Full Changelog](https://github.com/voxpupuli/ra10ke/compare/v4.3.0...v4.4.0)
+
+**Merged pull requests:**
+
+- Update voxpupuli-rubocop requirement from ~\> 4.0.0 to ~\> 4.1.0 [\#126](https://github.com/voxpupuli/ra10ke/pull/126) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v4.3.0](https://github.com/voxpupuli/ra10ke/tree/v4.3.0) (2025-05-13)
 
 [Full Changelog](https://github.com/voxpupuli/ra10ke/compare/v4.2.0...v4.3.0)
