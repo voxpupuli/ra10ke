@@ -24,5 +24,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'solve', '~> 4.0', '>= 4.0.4'
   spec.add_dependency 'table_print', '~> 1.5.6'
   spec.add_development_dependency 'rspec', '~> 3.6'
-  spec.add_development_dependency 'voxpupuli-rubocop', '~> 4.1.0'
+  spec.add_development_dependency 'voxpupuli-rubocop', '~> 4.2.0'
 end
