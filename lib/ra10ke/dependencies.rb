@@ -27,7 +27,7 @@ module Ra10ke::Dependencies
         # ignore tags that do not comply to semver
         nil
       end.select { |tag| !tag.nil? }.sort.last.to_s.downcase
-      latest_ref = tags.detect { |tag| tag[/\Av?(.*)\Z/, 1] == latest_tag }
+      tags.detect { |tag| tag[/\Av?(.*)\Z/, 1] == latest_tag }
     end
     attr_reader :puppetfile
 
@@ -151,8 +151,7 @@ module Ra10ke::Dependencies
       PuppetForge.host = puppetfile.forge if puppetfile.forge =~ /^http/
 
       # ignore file allows for "don't tell me about this"
-      ignore_modules = []
-      ignore_modules = File.readlines('.r10kignore').each { |l| l.chomp! } if File.exist?('.r10kignore')
+      File.readlines('.r10kignore').each { |l| l.chomp! } if File.exist?('.r10kignore')
       forge_mods = puppetfile.modules.find_all do |mod|
         mod.instance_of?(R10K::Module::Forge) && mod.v3_module.homepage_url?
       end
