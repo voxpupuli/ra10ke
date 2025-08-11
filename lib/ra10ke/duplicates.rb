@@ -32,6 +32,7 @@ module Ra10ke::Duplicates
 
   class Verification
     include Ra10ke::PuppetfileParser
+
     Module = Struct.new(:namespace, :name, :args) do
       def git?
         args.key? :git

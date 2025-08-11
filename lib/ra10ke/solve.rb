@@ -177,7 +177,7 @@ module Ra10ke::Solve
 
   def add_reqs_to_graph(artifact, metadata, no_demands = nil)
     deps = get_key_or_sym(metadata, :dependencies)
-    my_name = get_key_or_sym(metadata, :name)
+    get_key_or_sym(metadata, :name)
     deps.each do |dep|
       name = get_key_or_sym(dep, :name).tr('/', '-')
       # Add dependency to the global set of modules we want, so that we can
