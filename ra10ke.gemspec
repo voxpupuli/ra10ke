@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   spec.required_ruby_version = '>= 3.1.0'
 
-  spec.add_dependency 'git', '>= 1.18', '< 4.0'
+  spec.add_dependency 'git', '>= 1.18', '< 5.0'
   spec.add_dependency 'puppet_forge', '~> 6.0'
   spec.add_dependency 'r10k', '~> 5.0'
   spec.add_dependency 'rake', '~> 13.0', '>= 13.0.6'
