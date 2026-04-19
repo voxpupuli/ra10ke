@@ -50,38 +50,26 @@ module Ra10ke::Solve
       # List of modules we have in the Puppetfile, as [name, version] pairs
       @current_modules = []
 
+      # Single pass: partition modules into git/Forge arrays and simultaneously seed
+      # @processed_modules with all git module names. Seeding upfront prevents
+      # add_reqs_to_graph from fetching Forge releases for any git module encountered
+      # as a transitive dependency, regardless of declaration order in the Puppetfile.
+      git_modules = []
+      forge_modules = []
       puppetfile.modules.each do |puppet_module|
         next if ignore_modules.include? puppet_module.title
 
         if puppet_module.instance_of?(R10K::Module::Forge)
-          module_name = puppet_module.title.tr('/', '-')
-          installed_version = puppet_module.expected_version
-          puts "Processing Forge module #{module_name}-#{installed_version}"
-          @current_modules << [module_name, installed_version]
-          @graph.artifact(module_name, installed_version)
-          constraint = '>=0.0.0'
-          unless allow_major_bump
-            ver = Semverse::Version.new installed_version
-            if ver.major.zero?
-              constraint = "~>#{installed_version}"
-            else
-              nver = Semverse::Version.new([ver.major + 1, 0, 0])
-              constraint = "<#{nver}"
-            end
-          end
-          puts "...Adding a demand: #{module_name} #{constraint}"
-
-          @demands.add([module_name, constraint])
-          puts '...Fetching latest release version information'
-          forge_rel = PuppetForge::Module.find(module_name).current_release
-          mod = @graph.artifact(module_name, forge_rel.version)
-          puts '...Adding its requirements to the graph'
-          meta = get_release_metadata(module_name, forge_rel)
-          add_reqs_to_graph(mod, meta)
+          forge_modules << puppet_module
+        elsif puppet_module.instance_of?(R10K::Module::Git)
+          @processed_modules.add(puppet_module.title.tr('/', '-'))
+          git_modules << puppet_module
         end
+      end
 
-        next unless puppet_module.instance_of?(R10K::Module::Git)
-
+      # Process git modules first so their metadata populates the graph before
+      # any Forge module's transitive dependencies are resolved.
+      git_modules.each do |puppet_module|
         # This downloads the git module to modules/modulename
         meta = fetch_git_metadata(puppet_module)
         version = get_key_or_sym(meta, :version)
@@ -93,6 +81,35 @@ module Ra10ke::Solve
         @demands.add([module_name, version])
         mod = @graph.artifact(module_name, version)
         puts "...Adding requirements for git module #{module_name}-#{version}"
+        add_reqs_to_graph(mod, meta)
+      end
+
+      # Process Forge modules. Any git module already in @processed_modules will
+      # be skipped by add_reqs_to_graph when encountered as a transitive dependency.
+      forge_modules.each do |puppet_module|
+        module_name = puppet_module.title.tr('/', '-')
+        installed_version = puppet_module.expected_version
+        puts "Processing Forge module #{module_name}-#{installed_version}"
+        @current_modules << [module_name, installed_version]
+        @graph.artifact(module_name, installed_version)
+        constraint = '>=0.0.0'
+        unless allow_major_bump
+          ver = Semverse::Version.new installed_version
+          if ver.major.zero?
+            constraint = "~>#{installed_version}"
+          else
+            nver = Semverse::Version.new([ver.major + 1, 0, 0])
+            constraint = "<#{nver}"
+          end
+        end
+        puts "...Adding a demand: #{module_name} #{constraint}"
+
+        @demands.add([module_name, constraint])
+        puts '...Fetching latest release version information'
+        forge_rel = PuppetForge::Module.find(module_name).current_release
+        mod = @graph.artifact(module_name, forge_rel.version)
+        puts '...Adding its requirements to the graph'
+        meta = get_release_metadata(module_name, forge_rel)
         add_reqs_to_graph(mod, meta)
       end
       puts
