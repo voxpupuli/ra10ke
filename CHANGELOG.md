@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v4.5.1](https://github.com/voxpupuli/ra10ke/tree/v4.5.1) (2026-05-11)
+
+[Full Changelog](https://github.com/voxpupuli/ra10ke/compare/v4.5.0...v4.5.1)
+
+**Fixed bugs:**
+
+- fix: process git modules before Forge modules to prevent dependency conflicts [\#145](https://github.com/voxpupuli/ra10ke/pull/145) ([bastelfreak](https://github.com/bastelfreak))
+
+**Closed issues:**
+
+- r10k:solve\_dependencies pulls in outdated constraints from last forge release as implicit dependency instead of explicit git module [\#128](https://github.com/voxpupuli/ra10ke/issues/128)
+
 ## [v4.5.0](https://github.com/voxpupuli/ra10ke/tree/v4.5.0) (2025-10-16)
 
 [Full Changelog](https://github.com/voxpupuli/ra10ke/compare/v4.4.0...v4.5.0)
