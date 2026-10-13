@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v4.6.0](https://github.com/voxpupuli/ra10ke/tree/v4.6.0) (2026-10-13)
+
+[Full Changelog](https://github.com/voxpupuli/ra10ke/compare/v4.5.1...v4.6.0)
+
+**Implemented enhancements:**
+
+- feat: use git-gem in git\_repo class; drop support for git-gem version v1.x [\#152](https://github.com/voxpupuli/ra10ke/pull/152) ([rwaffen](https://github.com/rwaffen))
+
 ## [v4.5.1](https://github.com/voxpupuli/ra10ke/tree/v4.5.1) (2026-05-11)
 
 [Full Changelog](https://github.com/voxpupuli/ra10ke/compare/v4.5.0...v4.5.1)
