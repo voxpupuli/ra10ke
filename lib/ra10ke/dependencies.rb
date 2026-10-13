@@ -165,8 +165,7 @@ module Ra10ke::Dependencies
             "https://#{::Regexp.last_match(1)}/#{::Regexp.last_match(2)}"
           end
           repo = ::Ra10ke::GitRepo.new(source_url)
-          ref = repo.get_ref_like(mod.expected_version)
-          ref_name = ref ? ref[:name] : "bad url or tag #{mod.expected_version} is missing"
+          ref_name = repo.get_ref_like(mod.expected_version) || "bad url or tag #{mod.expected_version} is missing"
           <<~EOF
             mod '#{mod.name}',
               :git => '#{source_url}',
