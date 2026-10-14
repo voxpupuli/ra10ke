@@ -44,6 +44,7 @@ RSpec.describe 'Ra10ke::Deprecation::Validation' do
     end
 
     it 'deprecated modules' do
+      allow(PuppetForge::Module).to receive(:find).and_return(double(deprecated_at: nil))
       expect(instance.bad_mods?).to eq(false)
       expect(instance.deprecated_modules.count).to eq(0)
     end

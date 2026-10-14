@@ -55,12 +55,12 @@ RSpec.describe Ra10ke::Dependencies::Verification do
         checked << mod.title
         workers << Thread.current
       end
-      raise Socket::ResolutionError, 'DNS lookup failed' if mod == modules.first
+      raise SocketError, 'DNS lookup failed' if mod == modules.first
 
       { name: mod.title }
     end
 
-    expect { verification.processed_modules }.to raise_error(Socket::ResolutionError, 'DNS lookup failed')
+    expect { verification.processed_modules }.to raise_error(SocketError, 'DNS lookup failed')
     expect(checked.sort).to eq(modules.map(&:title).sort)
     expect(workers).to all(satisfy { |worker| !worker.alive? })
   end
