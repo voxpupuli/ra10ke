@@ -3,6 +3,7 @@ require 'r10k/puppetfile'
 require 'puppet_forge'
 require 'table_print'
 require 'git'
+require 'parallel'
 
 module Ra10ke::Dependencies
   GOOD_EMOJI = ENV['GOOD_EMOJI'] || '👍'
@@ -58,35 +59,13 @@ module Ra10ke::Dependencies
     # @returns {Array} array of version info for each module
     # @note does not include ignored modules or modules up2date
     def processed_modules(supplied_puppetfile = puppetfile)
-      queue = Queue.new
-      supplied_puppetfile.modules.each_with_index do |puppet_module, index|
+      Parallel.map(supplied_puppetfile.modules, in_threads: 5) do |puppet_module|
         next if ignored_modules.include? puppet_module.title
         # Ignore modules where ref is explicitly set to control branch
         next if puppet_module.instance_of?(R10K::Module::Git) && puppet_module.desired_ref == :control_branch
 
-        queue << [puppet_module, index]
-      end
-      queue.close
-
-      results = Array.new(supplied_puppetfile.modules.size)
-      errors = Array.new(results.size)
-      workers = Array.new([5, queue.size].min) do
-        Thread.new do
-          while (item = queue.pop)
-            puppet_module, index = item
-            begin
-              results[index] = process_module(puppet_module)
-            rescue StandardError => e
-              errors[index] = e
-            end
-          end
-        end
-      end
-      workers.each(&:join)
-      error = errors.compact.first
-      raise error if error
-
-      results.compact
+        process_module(puppet_module)
+      end.compact
     end
 
     def process_module(puppet_module)
