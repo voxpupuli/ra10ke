@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 3.1.0'
 
   spec.add_dependency 'git', '>= 2.0', '< 5.0'
-  spec.add_dependency 'parallel', '~> 1.27'
+  spec.add_dependency 'parallel', '>= 1.27', '< 3.0'
   spec.add_dependency 'puppet_forge', '~> 6.0'
   spec.add_dependency 'r10k', '~> 5.0'
   spec.add_dependency 'rake', '~> 13.0', '>= 13.0.6'
