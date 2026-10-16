@@ -4,12 +4,13 @@ require 'spec_helper'
 require 'ra10ke'
 
 RSpec.describe Ra10ke::RakeTask do
-  around do |example|
-    original_application = Rake.application
+  before do
+    @original_application = Rake.application
     Rake.application = Rake::Application.new
-    example.run
-  ensure
-    Rake.application = original_application
+  end
+
+  after do
+    Rake.application = @original_application
   end
 
   it 'uses one check for the table and exit status' do
