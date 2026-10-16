@@ -14,10 +14,10 @@ Gem::Specification.new do |spec|
 
   spec.files         = `git ls-files`.split($/)
   spec.require_paths = ['lib']
-  spec.required_ruby_version = '>= 3.1.0'
+  spec.required_ruby_version = '>= 3.4.0'
 
   spec.add_dependency 'git', '>= 2.0', '< 5.0'
-  spec.add_dependency 'parallel', '~> 1.27'
+  spec.add_dependency 'parallel', '~> 2.3'
   spec.add_dependency 'puppet_forge', '~> 6.0'
   spec.add_dependency 'r10k', '~> 5.0'
   spec.add_dependency 'rake', '~> 13.0', '>= 13.0.6'
@@ -25,5 +25,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'solve', '~> 4.0', '>= 4.0.4'
   spec.add_dependency 'table_print', '~> 1.5.6'
   spec.add_development_dependency 'rspec', '~> 3.6'
-  spec.add_development_dependency 'voxpupuli-rubocop', '~> 4.3.0'
+  spec.add_development_dependency 'voxpupuli-rubocop', '~> 5.3.0'
 end
