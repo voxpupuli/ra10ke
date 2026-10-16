@@ -26,7 +26,7 @@ module Ra10ke
 
     attr_accessor :basedir, :moduledir, :puppetfile_path, :puppetfile_name, :force, :purge
 
-    def initialize(*args)
+    def initialize(*)
       @basedir         = Dir.pwd
       @moduledir       = nil
       @puppetfile_path = nil
@@ -37,15 +37,15 @@ module Ra10ke
       yield(self) if block_given?
 
       namespace :r10k do
-        define_task_solve_dependencies(*args)
-        define_task_syntax(*args)
-        define_task_dependencies(*args)
-        define_task_deprecation(*args)
-        define_task_duplicates(*args)
-        define_task_install(*args)
-        define_task_validate(*args)
-        define_task_print_git_conversion(*args)
-        define_task_diff(*args)
+        define_task_solve_dependencies(*)
+        define_task_syntax(*)
+        define_task_dependencies(*)
+        define_task_deprecation(*)
+        define_task_duplicates(*)
+        define_task_install(*)
+        define_task_validate(*)
+        define_task_print_git_conversion(*)
+        define_task_diff(*)
       end
     end
 
